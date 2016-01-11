@@ -29,4 +29,8 @@
     return [vec[0] * scaler, vec[1] * scaler];
   };
 
+  Util.randomInRange = function (start, end) {
+    return start + (Math.random() * (end - start));
+  };
+
 })();
