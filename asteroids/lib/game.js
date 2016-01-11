@@ -7,7 +7,7 @@
     this.width = width;
     this.height = height;
     this.asteroids = [];
-    this.ship = new Asteroids.Ship(this.shipStartPosition(), this);
+    this.ship = new Asteroids.AltShip(this.shipStartPosition(), this);
     this.bullets = [];
   };
 

@@ -21,16 +21,16 @@
   GameView.prototype.bindKeyHandlers = function () {
     var ship = this.game.ship;
     key('left', function() {
-      ship.power([-1 * GameView.IMPULSE_SENSITIVITY,0]);
+      ship.left();
     });
     key('right', function() {
-      ship.power([1 * GameView.IMPULSE_SENSITIVITY,0]);
+      ship.right();
     });
     key('up', function() {
-      ship.power([0,-1 * GameView.IMPULSE_SENSITIVITY]);
+      ship.up();
     });
     key('down', function() {
-      ship.power([0,1 * GameView.IMPULSE_SENSITIVITY]);
+      ship.down();
     });
     key('space', function(){
       ship.fireBullet();

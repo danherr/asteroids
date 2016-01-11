@@ -53,4 +53,8 @@
     return direc;
   };
 
+  Util.unitVec = function(direction){
+    return [Math.cos(direction), Math.sin(direction)];
+  };
+
 })();

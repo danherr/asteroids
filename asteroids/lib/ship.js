@@ -97,4 +97,45 @@
   Ship.COLOR = 'blue';
   Ship.IMPULSE_SENSITIVITY = 2;
 
+  Ship.prototype.left = function () {
+    this.power([-1 * Ship.IMPULSE_SENSITIVITY,0]);
+  };
+
+  Ship.prototype.right = function () {
+    this.power([1 * Ship.IMPULSE_SENSITIVITY,0]);
+  };
+
+  Ship.prototype.up = function () {
+    this.power([0, -1 * Ship.IMPULSE_SENSITIVITY]);
+  };
+
+  Ship.prototype.down = function () {
+    this.power([0, 1 * Ship.IMPULSE_SENSITIVITY]);
+  };
+
+  var AltShip = Asteroids.AltShip = function () {
+    Ship.apply(this, arguments);
+  };
+  Asteroids.Util.inherits(AltShip, Ship);
+
+  AltShip.TURNING_SENSITIVITY = 0.5;
+
+  AltShip.prototype.left = function () {
+    var direction = Asteroids.Util.direction(this.heading);
+    direction = direction - AltShip.TURNING_SENSITIVITY;
+    this.heading = Asteroids.Util.unitVec(direction);
+  };
+
+  AltShip.prototype.right = function () {
+    var direction = Asteroids.Util.direction(this.heading);
+    this.heading = Asteroids.Util.unitVec(direction + AltShip.TURNING_SENSITIVITY);
+  };
+
+  AltShip.prototype.up = function () {
+    this.power(Asteroids.Util.scalerMult(this.heading, Ship.IMPULSE_SENSITIVITY));
+  };
+
+  AltShip.prototype.down = function () {
+  };
+
 })();
