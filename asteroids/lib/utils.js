@@ -45,4 +45,12 @@
     return Util.vecLength(Util.vecSub(vec1,vec2));
   };
 
+  Util.direction = function (vec) {
+    direc = Math.atan(vec[1]/vec[0]);
+    if (vec[0] < 0) {
+      direc += Math.PI;
+    }
+    return direc;
+  };
+
 })();

@@ -3,9 +3,9 @@
   var MovingObject = Asteroids.MovingObject;
   var Util = Asteroids.Util;
 
-  var Bullet = Asteroids.Bullet = function (pos, vel, game){
-    var muzzleVel = Util.scalerMult(Util.normalize(vel), Bullet.MUZZLE_SPEED);
-    MovingObject.call(this, pos, Util.vecAdd(vel, muzzleVel), Bullet.RADIUS, Bullet.COLOR, game);
+  var Bullet = Asteroids.Bullet = function (pos, shipVel, game, heading){
+    var muzzleVel = Util.scalerMult(heading, Bullet.MUZZLE_SPEED);
+    MovingObject.call(this, pos, Util.vecAdd(shipVel, muzzleVel), Bullet.RADIUS, Bullet.COLOR, game);
   };
   Util.inherits(Bullet, MovingObject);
 
