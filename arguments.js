@@ -39,3 +39,38 @@ Function.prototype.myBind = function (toBind) {
 // say.myBind(dog)(3, "hi");
 // say.myBind(dog, 3)("hi");
 // say.myBind(dog, 3, "hi")();
+
+
+
+function curriedSum(numArgs) {
+  var numbers = [];
+  return function _curriedSum(num) {
+    var numArray = numbers.push(num);
+    if (numbers.length === numArgs) {
+      return numbers.reduce(function(a, b) {
+        return a + b;
+      }, 0);
+    } else {
+      return _curriedSum;
+    }
+  };
+}
+
+// var sum = curriedSum(3);
+// console.log(sum(1)(2)(3));
+
+Function.prototype.curry = function(numArgs) {
+  var args = [];
+  var func = this;
+  return function _curry(arg) {
+    args.push(arg);
+    if (args.length === numArgs) {
+      return func.apply(this, args);
+    } else {
+      return _curry;
+    }
+  };
+}
+
+// var newSum = sum.curry(3);
+// console.log(newSum(1)(2)(3));
