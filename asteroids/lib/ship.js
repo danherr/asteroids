@@ -19,10 +19,11 @@
     }
   };
 
+  Ship.prototype.power = function (impulse) {
+    this.vel = Asteroids.Util.vecAdd(this.vel, impulse);
+  };
+
   Ship.RADIUS = 10;
   Ship.COLOR = 'blue';
-
-
-
 
 })();

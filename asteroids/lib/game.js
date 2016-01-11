@@ -10,7 +10,7 @@
     this.ship = new Asteroids.Ship(this.shipStartPosition(), this);
   };
 
-  Game.NUM_ASTEROIDS = 50;
+  Game.NUM_ASTEROIDS = 10;
 
   Game.randomPos = function (width, height) {
     var xCoord = Util.randomInRange(Asteroid.RADIUS, width - Asteroid.RADIUS);
