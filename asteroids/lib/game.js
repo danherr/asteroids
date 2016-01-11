@@ -59,7 +59,6 @@
     for (i = 0; i < objects.length - 1; i++) {
       for (j = i + 1; j < objects.length; j++) {
         if (objects[i].isCollideWith(objects[j])) {
-          alert("collision");
           objects[i].collideWith(objects[j]);
           objects[j].collideWith(objects[i]);
         }
