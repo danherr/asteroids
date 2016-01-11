@@ -8,6 +8,7 @@
     this.height = height;
     this.asteroids = [];
     this.ship = new Asteroids.Ship(this.shipStartPosition(), this);
+    this.bullets = [];
   };
 
   Game.NUM_ASTEROIDS = 10;
@@ -60,6 +61,7 @@
         if (objects[i].isCollideWith(objects[j])) {
           alert("collision");
           objects[i].collideWith(objects[j]);
+          objects[j].collideWith(objects[i]);
         }
       }
     }
@@ -70,14 +72,24 @@
     this.checkCollisions();
   };
 
-  Game.prototype.remove = function (asteroid) {
+  Game.prototype.removeAsteroid = function (asteroid) {
     this.asteroids = this.asteroids.filter(function (otherAsteroid) {
       return otherAsteroid != asteroid;
     });
   };
 
+  Game.prototype.removeBullet = function (bullet) {
+    this.bullets = this.bullets.filter(function (otherBullet) {
+      return otherBullet !== bullet;
+    });
+  };
+
   Game.prototype.allObjects = function() {
-    return (this.asteroids.concat([this.ship]));
+    return (this.asteroids.concat([this.ship]).concat(this.bullets));
+  };
+
+  Game.prototype.outOfBounds = function(pos) {
+    return (0 > pos[0]) || (0 > pos[1]) || (this.width < pos[0]) || (this.height < pos[1]);
   };
 
 })();

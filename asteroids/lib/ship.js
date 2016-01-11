@@ -13,14 +13,12 @@
     this.vel = [0,0];
   };
 
-  Ship.prototype.collideWith = function (otherObject) {
-    if (otherObject instanceof Asteroids.Asteroid) {
-      this.relocate();
-    }
-  };
-
   Ship.prototype.power = function (impulse) {
     this.vel = Asteroids.Util.vecAdd(this.vel, impulse);
+  };
+
+  Ship.prototype.fireBullet = function () {
+    this.game.bullets.push(new Asteroids.Bullet(this.pos, this.vel, this.game));
   };
 
   Ship.RADIUS = 10;
