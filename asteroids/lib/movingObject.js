@@ -31,4 +31,14 @@
     this.pos[1] += this.vel[1];
     this.pos = this.game.wrap(this.pos);
   };
+
+  MovingObject.prototype.isCollideWith = function (otherObject) {
+    return Asteroids.Util.metric(this.pos, otherObject.pos) <= (this.radius + otherObject.radius);
+  };
+
+  MovingObject.prototype.collideWith = function (otherObject) {
+    // this.game.remove(otherObject);
+    // this.game.remove(this);
+  };
+
 })();

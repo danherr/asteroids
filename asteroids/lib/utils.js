@@ -33,4 +33,16 @@
     return start + (Math.random() * (end - start));
   };
 
+  Util.vecAdd = function (vec1, vec2) {
+    return [vec1[0] + vec2[0], vec1[1] + vec2[1]];
+  };
+
+  Util.vecSub = function (vec1, vec2) {
+    return Util.vecAdd(vec1, Util.scalerMult(vec2, -1));
+  };
+
+  Util.metric = function (vec1, vec2) {
+    return Util.vecLength(Util.vecSub(vec1,vec2));
+  };
+
 })();

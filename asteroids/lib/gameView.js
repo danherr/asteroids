@@ -12,7 +12,7 @@
 
     setInterval(function() {
       this.game.draw(this.ctx);
-      this.game.moveObjects();
+      this.game.step();
     }.bind(this), 20);
   };
 
