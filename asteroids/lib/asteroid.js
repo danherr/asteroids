@@ -23,9 +23,6 @@
     };
     
     Asteroid.prototype.die = function () {
-        console.log("he's dead jim.")
-        debugger;
-        
         var nuSize = this.size - 1;
 
         if (nuSize > 0) {

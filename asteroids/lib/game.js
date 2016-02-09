@@ -4,6 +4,9 @@
     var Util = Asteroids.Util;
 
     var Game = Asteroids.Game = function(width, height){
+        this.difficulty = 1;
+        this.moneys = 0;
+        this.lives = Game.STARTING_LIVES;
         this.width = width;
         this.height = height;
         this.asteroids = [];
@@ -11,7 +14,8 @@
         this.bullets = [];
     };
 
-    Game.NUM_ASTEROIDS = 5;
+    Game.STARTING_ASTEROIDS = 5;
+    Game.STARTING_LIVES = 5;
 
     Game.randomPos = function (width, height) {
         var xCoord = Util.randomInRange(Asteroid.RADIUS, width - Asteroid.RADIUS);
@@ -19,14 +23,21 @@
         return [xCoord, yCoord];
     };
 
-    Game.prototype.addAsteroids = function () {
-        for (var i = 0; i < Game.NUM_ASTEROIDS; i++) {
-            this.asteroids.push(new Asteroids.Asteroid(Asteroids.Game.randomPos(this.width, this.height), this, 3));
+    Game.prototype.addInitialAsteroids = function () {
+        for (var i = 0; i < Game.STARTING_ASTEROIDS; i++) {
+            this.asteroids.push(
+                new Asteroids.Asteroid(
+                    Asteroids.Game.randomPos(this.width, this.height),
+                    this,
+                    3
+                )
+            );
         }
 
         console.log(this.asteroids);
 
     };
+
 
     Game.prototype.addAsteroid = function (asteroid) {
         this.asteroids.push(asteroid);
@@ -69,10 +80,10 @@
     }
   };
 
-  Game.prototype.step = function () {
-    this.moveObjects();
-    this.checkCollisions();
-  };
+    Game.prototype.step = function () {
+        this.moveObjects();
+        this.checkCollisions();
+    };
 
   Game.prototype.removeAsteroid = function (asteroid) {
     this.asteroids = this.asteroids.filter(function (otherAsteroid) {
