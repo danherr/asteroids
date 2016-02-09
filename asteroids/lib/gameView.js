@@ -9,7 +9,7 @@
     };
 
     GameView.prototype.start = function () {
-        this.game.addAsteroids();
+        this.game.addInitialAsteroids();
         this.bindKeyHandlers();
         setInterval(function() {
             if (this.unPaused) {

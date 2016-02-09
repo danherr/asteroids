@@ -18,7 +18,8 @@
 
     Asteroid.prototype.collideWith = function (otherObject) {
       if (otherObject instanceof Asteroids.Ship) {
-        otherObject.relocate();
+          otherObject.relocate();
+          this.game.lives -= 1;
       }
     };
     
@@ -27,8 +28,10 @@
 
         if (nuSize > 0) {
             for (var i = 0 ; i < 3; i++) {
-                this.game.addAsteroid(new Asteroids.Asteroid(this.pos, this.game, nuSize));                
+                this.game.addAsteroid(new Asteroids.Asteroid(this.pos, this.game, nuSize));      
             }
+        } else {
+            this.game.moneys += 5;
         }
 
         this.game.removeAsteroid(this);
