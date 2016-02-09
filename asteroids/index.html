@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -13,7 +14,7 @@
   <body>
 
     <canvas></canvas>
-    <script src="../keymaster/keymaster.js"></script>
+    <script src="not_invented_here/keymaster/keymaster.js"></script>
     <script src="lib/utils.js"></script>
     <script src="lib/movingObject.js"></script>
     <script src="lib/asteroid.js"></script>
@@ -23,8 +24,8 @@
     <script src="lib/gameView.js"></script>
     <script type="text/javascript">
       var canvasEl = document.getElementsByTagName("canvas")[0];
-      canvasEl.height = window.innerHeight;
-      canvasEl.width = window.innerWidth;
+      canvasEl.height = window.innerHeight - 10;
+      canvasEl.width = window.innerWidth - 10;
       ctx = canvasEl.getContext("2d");
       var game = new window.Asteroids.Game(
         canvasEl.width,

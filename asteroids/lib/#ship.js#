@@ -4,7 +4,7 @@
 
   var Ship = Asteroids.Ship = function (pos, game) {
     MovingObject.call(this, pos, [0,0], Ship.RADIUS, Ship.COLOR, game);
-     this.firing = 0;
+    this.firing = 0;
   };
 
   Asteroids.Util.inherits(Ship, MovingObject);

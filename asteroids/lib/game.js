@@ -1,52 +1,55 @@
 (function () {
-  var Asteroids = window.Asteroids = window.Asteroids || {};
-  var Asteroid = Asteroids.Asteroid;
-  var Util = Asteroids.Util;
+    var Asteroids = window.Asteroids = window.Asteroids || {};
+    var Asteroid = Asteroids.Asteroid;
+    var Util = Asteroids.Util;
 
-  var Game = Asteroids.Game = function(width, height){
-    this.width = width;
-    this.height = height;
-    this.asteroids = [];
-    this.ship = new Asteroids.AltShip(this.shipStartPosition(), this);
-    this.bullets = [];
-  };
+    var Game = Asteroids.Game = function(width, height){
+        this.width = width;
+        this.height = height;
+        this.asteroids = [];
+        this.ship = new Asteroids.AltShip(this.shipStartPosition(), this);
+        this.bullets = [];
+    };
 
-  Game.NUM_ASTEROIDS = 10;
+    Game.NUM_ASTEROIDS = 5;
 
-  Game.randomPos = function (width, height) {
-    var xCoord = Util.randomInRange(Asteroid.RADIUS, width - Asteroid.RADIUS);
-    var yCoord = Util.randomInRange(Asteroid.RADIUS, height - Asteroid.RADIUS);
-    return [xCoord, yCoord];
-  };
+    Game.randomPos = function (width, height) {
+        var xCoord = Util.randomInRange(Asteroid.RADIUS, width - Asteroid.RADIUS);
+        var yCoord = Util.randomInRange(Asteroid.RADIUS, height - Asteroid.RADIUS);
+        return [xCoord, yCoord];
+    };
 
-  Game.prototype.addAsteroids = function () {
-    for (var i = 0; i < Game.NUM_ASTEROIDS; i++) {
-      this.asteroids.push(new Asteroids.Asteroid(Asteroids.Game.randomPos(this.width, this.height), this));
-    }
+    Game.prototype.addAsteroids = function () {
+        for (var i = 0; i < Game.NUM_ASTEROIDS; i++) {
+            this.asteroids.push(new Asteroids.Asteroid(Asteroids.Game.randomPos(this.width, this.height), this, 3));
+        }
 
-    console.log(this.asteroids);
+        console.log(this.asteroids);
 
-  };
+    };
 
-  Game.prototype.draw = function (ctx) {
-    ctx.clearRect(0, 0, this.width, this.height);
-    ctx.fillStyle = "black";
-    ctx.fillRect(0, 0, canvasEl.width, canvasEl.height);
-    this.allObjects().forEach(function (object) {
-      object.draw(ctx);
-    });
-  };
+    Game.prototype.addAsteroid = function (asteroid) {
+        this.asteroids.push(asteroid);
+    };
+    
+    Game.prototype.draw = function (ctx) {
+        ctx.clearRect(0, 0, this.width, this.height);
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, canvasEl.width, canvasEl.height);
+        this.allObjects().forEach(function (object) {
+            object.draw(ctx);
+        });
+    };
 
-  Game.prototype.shipStartPosition = function () {
-    // return [this.width / 2, this.height / 2];
-    return Game.randomPos(this.width, this.height);
-  };
+    Game.prototype.shipStartPosition = function () {
+        return Game.randomPos(this.width, this.height);
+    };
 
-  Game.prototype.moveObjects = function () {
-    this.allObjects().forEach(function(object) {
-      object.move();
-    });
-  };
+    Game.prototype.moveObjects = function () {
+        this.allObjects().forEach(function(object) {
+            object.move();
+        });
+    };
 
   Game.prototype.wrap = function (pos) {
     return [(pos[0] + this.width) % this.width, (pos[1] + this.height) % this.height];
