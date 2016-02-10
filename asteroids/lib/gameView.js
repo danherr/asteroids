@@ -2,10 +2,11 @@
 
   var Asteroids = window.Asteroids = window.Asteroids || {};
 
-    var GameView = Asteroids.GameView =  function (game, ctx) {
+    var GameView = Asteroids.GameView =  function (game, ctx, menu) {
         this.game = game;
         this.ctx = ctx;
         this.unPaused = true;
+        this.menu = menu;
     };
 
     GameView.prototype.start = function () {
@@ -28,20 +29,40 @@
     GameView.prototype.bindKeyHandlers = function () {
         var ship = this.game.ship;
         key('left', function () {
-            ship.left();
-        });
+            if (this.unPaused) {
+               ship.left();
+            } else {
+                this.menu.left();
+            }
+        }.bind(this));
         key('right', function () {
-            ship.right();
-        });
+            if (this.unPaused) {
+               ship.right();
+            } else {
+                this.menu.right();
+            }
+        }.bind(this));
         key('up', function () {
-            ship.up();
-        });
+            if (this.unPaused) {
+               ship.up();
+            } else {
+                this.menu.up();
+            }
+        }.bind(this));
         key('down', function () {
-            ship.down();
-        });
+            if (this.unPaused) {
+               ship.down();
+            } else {
+                menu.down();
+            }
+        }.bind(this));
         key('space', function (){
-            ship.fireBullet();
-        });
+            if (this.unPaused) {
+                ship.fireBullet();
+            } else {
+                this.menu.select();
+            }
+        }.bind(this));
         key('p', function () {
             this.togglePause();
         }.bind(this));

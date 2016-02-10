@@ -25,7 +25,7 @@
 
     Game.prototype.addInitialAsteroids = function () {
         for (var i = 0; i < Game.STARTING_ASTEROIDS; i++) {
-            this.asteroids.push(
+            this.addAsteroid(
                 new Asteroids.Asteroid(
                     Asteroids.Game.randomPos(this.width, this.height),
                     this,
@@ -38,10 +38,26 @@
 
     };
 
+    Game.prototype.addNewThings = function () {
+        if (Math.random() > 0.995) {
+            this.addAsteroid(
+                new Asteroids.Asteroid(
+                    Asteroids.Game.randomPos(this.width, this.height),
+                    this,
+                    3
+                )
+            );
+        }
+    };
 
     Game.prototype.addAsteroid = function (asteroid) {
+        // while (this.areCollisionsWithThis(asteroid)) {
+        //     asteroid.pos = Util.vecAdd(asteroid.pos, Util.randomVec(1));
+        // }                      
+
         this.asteroids.push(asteroid);
     };
+
     
     Game.prototype.draw = function (ctx) {
         ctx.clearRect(0, 0, this.width, this.height);
@@ -62,8 +78,11 @@
         });
     };
 
-  Game.prototype.wrap = function (pos) {
-    return [(pos[0] + this.width) % this.width, (pos[1] + this.height) % this.height];
+    Game.prototype.wrap = function (pos, offset) {
+        var offset = offset || 0;
+        pos = Util.vecAdd(pos, [offset, offset])
+        return [(pos[0] + this.width + 2*offset) % (this.width + 2*offset) - offset,
+                (pos[1] + this.height + 2*offset) % (this.height + 2*offset) - offset];
   };
 
   Game.prototype.checkCollisions = function () {
@@ -71,7 +90,7 @@
     var j;
     var objects = this.allObjects();
     for (i = 0; i < objects.length - 1; i++) {
-      for (j = i + 1; j < objects.length; j++) {
+     for (var j = i + 1; j < objects.length; j++) {
         if (objects[i].isCollideWith(objects[j])) {
           objects[i].collideWith(objects[j]);
           objects[j].collideWith(objects[i]);
@@ -80,7 +99,19 @@
     }
   };
 
+    Game.prototype.areCollisionsWithThis = function (object) {
+        var objects = this.allObjects();
+        for (var j = 0; j < objects.length; j++) {
+            if (object.isCollideWith(objects[j])) {
+                return true;
+            }
+        }
+
+        return false;
+    };
+
     Game.prototype.step = function () {
+        this.addNewThings();
         this.moveObjects();
         this.checkCollisions();
     };

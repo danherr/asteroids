@@ -21,6 +21,7 @@
     <script src="lib/ship.js"></script>
     <script src="lib/bullet.js"></script>
     <script src="lib/game.js"></script>
+    <script src="lib/menu.js"></script>
     <script src="lib/gameView.js"></script>
     <script type="text/javascript">
       var canvasEl = document.getElementsByTagName("canvas")[0];
@@ -31,7 +32,8 @@
         canvasEl.width,
         canvasEl.height
       );
-      new window.Asteroids.GameView(game, ctx).start();
+      var menu = new window.Asteroids.Menu(game);
+      new window.Asteroids.GameView(game, ctx, menu).start();
     </script>
 
   </body>

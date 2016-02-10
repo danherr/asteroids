@@ -3,8 +3,14 @@
   var MovingObject = Asteroids.MovingObject;
 
   var Ship = Asteroids.Ship = function (pos, game) {
-    MovingObject.call(this, pos, [0,0], Ship.RADIUS, Ship.COLOR, game);
-     this.firing = 0;
+      MovingObject.call(this, {
+          pos: pos,
+          vel: [0,0],
+          radius: Ship.RADIUS,
+          objectColor: Ship.COLOR,
+          game: game
+      });
+    this.firing = 0;
   };
 
   Asteroids.Util.inherits(Ship, MovingObject);
