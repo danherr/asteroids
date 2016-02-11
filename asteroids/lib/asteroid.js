@@ -21,6 +21,7 @@
 
         this.size = size;
         this.vertices = Asteroids.MovingObject.randomVertices(3 * size + 5, radius);
+        this.hitPoints = size;
     };
     
     Asteroids.Util.inherits(Asteroids.Asteroid, Asteroids.MovingObject);
@@ -48,6 +49,12 @@
           
       }
     };
+
+
+    Asteroid.prototype.getHit = function (damage) {
+        this.hitPoints -= damage;
+        if (this.hitPoints <= 0) this.die();
+    };
     
     Asteroid.prototype.die = function () {
         var nuSize = this.size - 1;
@@ -58,6 +65,7 @@
             }
         } else {
             this.game.moneys += 5;
+            this.game.level = Math.max(Math.log(this.game.moneys / 5), 1);
         }
 
         this.game.removeAsteroid(this);
@@ -65,7 +73,7 @@
 
 
     Asteroids.Asteroid.COLOR = 'grey'; 
-    Asteroids.Asteroid.RADIUS = 30;
+    Asteroids.Asteroid.RADIUS = 40;
 
     console.log(Asteroids.Util);
 

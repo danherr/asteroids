@@ -11,6 +11,28 @@
         childClass.prototype.constructor = childClass;
     };
 
+
+    Util.drawPolygon = function (ctx, vertices, fill, stroke) {
+
+        ctx.fillStyle = fill;
+        ctx.strokeStyle = stroke;
+        ctx.beginPath();
+
+        ctx.moveTo(vertices[0][0], vertices[0][1]);
+
+        for (var i = 1; i < vertices.length; i++) {
+            ctx.lineTo(vertices[i][0], vertices[i][1]);
+        }
+
+        ctx.lineTo(vertices[0][0], vertices[0][1]);
+
+        ctx.fill();
+        ctx.stroke();
+    }
+        
+
+    
+
     Util.randomVec = function(length) {
         var vec = [Math.random() - 0.5, Math.random() - 0.5];
         return Util.scalerMult(vec, length / Util.vecLength(vec));
@@ -57,6 +79,10 @@
         return [Math.cos(direction), Math.sin(direction)];
     };
 
+    Util.makeVec = function(direction, length) {
+        return [Math.cos(direction) * length, Math.sin(direction) * length];
+    }
+
     Util.innerProd = function (vec1, vec2) {
         return (vec1[0] * vec2[0]) + (vec1[1] * vec2[1]);
     }
@@ -68,6 +94,21 @@
     Util.normal = function (vec, scaling) {
         scaling = scaling || 1;
         return [vec[1] * scaling, -vec[0] * scaling];
+    }
+
+    Util.rotate = function (vec, angle) {
+        var length = Util.vecLength(vec);
+        return Util.transform(vec, angle, length);
+    };
+
+    Util.transform = function (vec, angle, length) {
+       var direction = Util.direction(vec);
+       direction += angle;
+       return Util.makeVec(direction, length);        
+    }
+
+    Util.scaleTo = function (vec, length) {
+        return Util.scalerMult(vec, length / Util.vecLength(vec));
     }
 
 })();

@@ -55,52 +55,30 @@
     };
 
     Ship.prototype.draw = function(ctx) {
-        ctx.fillStyle = this.objectColor;
-        ctx.strokeStyle = this.objectColor;
+        var heading = Asteroids.Util.direction(this.heading);
+        var vertices = [0, 2.3, 3.92].map(function (angle) {
+            return Asteroids.Util.vecAdd(
+                this.pos,
+                Asteroids.Util.transform(this.heading, angle, this.radius)
+            );
+        }.bind(this))
+
+        ctx.lineWidth = 1;
+
+        Asteroids.Util.drawPolygon(ctx, vertices, this.objectColor, this.strokeColor);
+
         ctx.lineWidth = 3;
-        ctx.beginPath();
-
-        heading = Asteroids.Util.direction(this.heading);
-
-        ctx.arc(
-            this.pos[0],
-            this.pos[1],
-            this.radius,
-            heading - Math.PI - 1.2,
-            heading - Math.PI + 1.2,
-            false
-        );
-
-        ctx.fill();
-
-        ctx.beginPath();
-
-        ctx.arc(
-            this.pos[0],
-            this.pos[1],
-            this.radius,
-            heading  - 0.75,
-            heading  + 0.75,
-            false
-        );
-
-        ctx.fill();
-
-        var shortHeading = Asteroids.Util.scalerMult(this.heading, this.radius * 0.8);
-
-        ctx.beginPath();
-        ctx.moveTo(this.pos[0] - shortHeading[0], this.pos[1] - shortHeading[1]);
-        ctx.lineTo(this.pos[0] + shortHeading[0], this.pos[1] + shortHeading[1]);
-        ctx.stroke();
-
+        
         if (this.firing > 0) {
+
             ctx.strokeStyle = 'yellow';
+
 
             ctx.beginPath();
             ctx.arc(
                 this.pos[0],
                 this.pos[1],
-                this.radius + 0.3,
+                this.radius + 0.5,
                 heading  - Math.PI - 0.5,
                 heading  - Math.PI - 0.3,
                 false
@@ -122,7 +100,7 @@
         }
     };
 
-    Ship.RADIUS = 10;
+    Ship.RADIUS = 15;
     Ship.COLOR = 'blue';
     Ship.IMPULSE_SENSITIVITY = 2;
 
@@ -168,23 +146,26 @@
     };
 
     AltShip.prototype.fireBullet = function (letter) {
-        var heading = this.heading;
+        var heading = this.heading
         
-        this.game.bullets.push(new Asteroids.Bullet(
-            Asteroids.Util.vecAdd(this.pos, Asteroids.Util.scalerMult(heading, 6)),
-            this.vel,
-            this.game,
-            heading));
-        this.game.bullets.push(new Asteroids.Bullet(
-            Asteroids.Util.vecAdd(this.pos, Asteroids.Util.normal(heading, 6)),
-            this.vel,
-            this.game,
-            heading));
-        this.game.bullets.push(new Asteroids.Bullet(
-            Asteroids.Util.vecAdd(this.pos, Asteroids.Util.normal(heading, -6)),
-            this.vel,
-            this.game,
-            heading));        
+        this.game.bullets.push(new Asteroids.Bullet({
+            pos: Asteroids.Util.vecAdd(this.pos, Asteroids.Util.scalerMult(heading, 6)),
+            shipVel: this.vel,
+            game: this.game,
+            heading: heading
+        }));
+        this.game.bullets.push(new Asteroids.Bullet({
+            pos: Asteroids.Util.vecAdd(this.pos, Asteroids.Util.normal(heading, 6)),
+            shipVel: this.vel,
+            game: this.game,
+            heading: Asteroids.Util.rotate(heading, -0.2)
+        }));        
+        this.game.bullets.push(new Asteroids.Bullet({
+            pos: Asteroids.Util.vecAdd(this.pos, Asteroids.Util.normal(heading, -6)),
+            shipVel: this.vel,
+            game: this.game,
+            heading: Asteroids.Util.rotate(heading, 0.2)
+        }));        
     };
 
     

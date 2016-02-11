@@ -11,6 +11,13 @@
         this.game = params.game;
         this.heading = [0,1];
         this.vertices = params.vertices || [];
+        if (params.vertices) {
+            this.lengths = params.vertices.map(Asteroids.Util.vecLength);
+            this.directions = params.vertices.map(Asteroids.Util.direction);
+        } else {
+            this.lengths = [];
+            this.directions = [];
+        }
     };
 
     MovingObject.randomVertices = function (num, length) {
@@ -23,7 +30,7 @@
             var vec = Asteroids.Util.unitVec(direction);
             vec = Asteroids.Util.scalerMult(vec, length);
             if (Math.random() < 0.4) {
-                vec = Asteroids.Util.scalerMult(vec, 0.7);
+                vec = Asteroids.Util.scalerMult(vec, 0.8);
             }
             return vec;
         });
@@ -34,22 +41,7 @@
             return Asteroids.Util.vecAdd(this.pos, vertex)
         }.bind(this));
 
-        
-        ctx.fillStyle = this.objectColor;
-        ctx.strokeStyle = this.strokeColor;
-        ctx.beginPath();
-
-        ctx.moveTo(vertices[0][0], vertices[0][1]);
-
-        for (var i = 1; i < vertices.length; i++) {
-            ctx.lineTo(vertices[i][0], vertices[i][1]);
-        }
-
-        ctx.lineTo(vertices[0][0], vertices[0][1]);
-
-        ctx.fill();
-        ctx.stroke();
-        
+        Asteroids.Util.drawPolygon(ctx, vertices, this.objectColor, this.strokeColor)
     };
 
     

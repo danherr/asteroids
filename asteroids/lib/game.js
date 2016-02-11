@@ -4,9 +4,9 @@
     var Util = Asteroids.Util;
 
     var Game = Asteroids.Game = function(width, height){
-        this.difficulty = 1;
         this.moneys = 0;
         this.lives = Game.STARTING_LIVES;
+        this.level = 1;
         this.width = width;
         this.height = height;
         this.asteroids = [];
@@ -39,12 +39,36 @@
     };
 
     Game.prototype.addNewThings = function () {
-        if (Math.random() > 0.995) {
+        if (Math.random() > 0.999) {
+            this.addAsteroid(
+                new Asteroids.Asteroid(
+                    Asteroids.Game.randomPos(this.width, this.height),
+                    this,
+                    4
+                )
+            );
+        } else if (Math.random() > 0.997) {
             this.addAsteroid(
                 new Asteroids.Asteroid(
                     Asteroids.Game.randomPos(this.width, this.height),
                     this,
                     3
+                )
+            );
+        } else if (Math.random() > 0.995) {
+            this.addAsteroid(
+                new Asteroids.Asteroid(
+                    Asteroids.Game.randomPos(this.width, this.height),
+                    this,
+                    2
+                )
+            );
+        } else if (Math.random() > 0.992) {
+            this.addAsteroid(
+                new Asteroids.Asteroid(
+                    Asteroids.Game.randomPos(this.width, this.height),
+                    this,
+                    1
                 )
             );
         }
