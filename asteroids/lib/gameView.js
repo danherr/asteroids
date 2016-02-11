@@ -56,9 +56,30 @@
                 menu.down();
             }
         }.bind(this));
-        key('space', function (){
+        key('w', function (){
             if (this.unPaused) {
-                ship.fireBullet();
+                ship.fireBullet('w');
+            } else {
+                this.menu.select();
+            }
+        }.bind(this));
+        key('a', function (){
+            if (this.unPaused) {
+                ship.fireBullet('a');
+            } else {
+                this.menu.select();
+            }
+        }.bind(this));
+        key('s', function (){
+            if (this.unPaused) {
+                ship.fireBullet('s');
+            } else {
+                this.menu.select();
+            }
+        }.bind(this));
+        key('d', function (){
+            if (this.unPaused) {
+                ship.fireBullet('d');
             } else {
                 this.menu.select();
             }

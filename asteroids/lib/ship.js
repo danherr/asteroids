@@ -26,9 +26,22 @@
     this.firing = 5;
   };
 
-  Ship.prototype.fireBullet = function () {
-    this.game.bullets.push(new Asteroids.Bullet(this.pos, this.vel, this.game, this.heading));
-  };
+    Ship.prototype.fireBullet = function (letter) {
+        var heading = [0,-1];
+        
+        if (letter == 'a') {
+            heading = [-1,0];
+        } else if (letter === 's') {
+            heading = [0,1];
+        } else if (letter === 'd') {
+            heading = [1,0];
+        }
+ 
+
+        this.game.bullets.push(new Asteroids.Bullet(this.pos, this.vel, this.game, heading));
+        this.game.bullets.push(new Asteroids.Bullet(Asteroids.Util.vecAdd(this.pos, heading), this.vel, this.game, heading));
+        this.game.bullets.push(new Asteroids.Bullet(Asteroids.Util.vecAdd(this.pos, heading), this.vel, this.game, heading));        
+    };
 
   Ship.prototype.draw = function(ctx) {
     ctx.fillStyle = this.objectColor;
@@ -143,4 +156,11 @@
   AltShip.prototype.down = function () {
   };
 
+  AltShip.prototype.fireBullet = function (letter) {
+        var heading = this.heading;
+        
+        this.game.bullets.push(new Asteroids.Bullet(this.pos, this.vel, this.game, heading));
+    };
+
+    
 })();

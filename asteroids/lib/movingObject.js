@@ -36,7 +36,7 @@
 
         
         ctx.fillStyle = this.objectColor;
-        ctx.strokeStyle = this.objectColor;
+        ctx.strokeStyle = this.strokeColor;
         ctx.beginPath();
 
         ctx.moveTo(vertices[0][0], vertices[0][1]);
@@ -44,6 +44,8 @@
         for (var i = 1; i < vertices.length; i++) {
             ctx.lineTo(vertices[i][0], vertices[i][1]);
         }
+
+        ctx.lineTo(vertices[0][0], vertices[0][1]);
 
         ctx.fill();
         ctx.stroke();

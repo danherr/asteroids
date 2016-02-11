@@ -5,13 +5,14 @@
     
     var Bullet = Asteroids.Bullet = function (pos, shipVel, game, heading){
         var muzzleVel = Util.scalerMult(heading, Bullet.MUZZLE_SPEED);
+        
         MovingObject.call(this, {
             pos: pos,
             vel: Util.vecAdd(shipVel, muzzleVel),
             radius: Bullet.RADIUS,
             objectColor: Bullet.COLOR,
             game: game,
-            vertices: [[-2,0], [0,2], [2,0]]
+            vertices: [[-1,0], [0,1], [1,0], [0,-1]]
         });
     };
     Util.inherits(Bullet, MovingObject);
