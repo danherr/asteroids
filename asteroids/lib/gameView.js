@@ -63,6 +63,13 @@
                 this.menu.select();
             }
         }.bind(this));
+        key('space', function (){
+            if (this.unPaused) {
+                ship.fireBullet('w');
+            } else {
+                this.menu.select();
+            }
+        }.bind(this));
         key('a', function (){
             if (this.unPaused) {
                 ship.fireBullet('a');
