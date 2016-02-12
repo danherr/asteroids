@@ -12,8 +12,10 @@
             vel: Util.vecAdd(params.shipVel, muzzleVel),
             radius: params.radius || Bullet.RADIUS,
             objectColor: params.color || Bullet.COLOR,
+            strokeColor: params.color || Bullet.COLOR,
             game: params.game,
-            vertices: params.vertices || [[-1,0], [0,1], [1,0], [0,-1]]
+            vertices: params.vertices || [[-1,0], [0,1], [1,0], [0,-1]],
+            heading: params.heading
         });
 
         this.damage = params.damage || 1;
@@ -49,11 +51,56 @@
 
 
 
+    var Missile = Asteroids.Missile = function (params) {
+        params.minSpeed = Missile.MIN_SPEED;
+        params.damage = 2;
+        params.color = Missile.COLOR;
 
+        Bullet.call(this, params);
+
+        this.vertices = [
+            Asteroids.Util.scalerMult(this.heading, 7),
+            Asteroids.Util.scalerMult(this.heading, 2),
+            Asteroids.Util.normal(this.heading, 1),
+            [0,0],
+            Asteroids.Util.scalerMult(this.heading, 2),            
+            Asteroids.Util.normal(this.heading, -1),
+            [0,0]
+        ]
+
+    }
+
+    Asteroids.Util.inherits(Missile, Bullet);
+
+    
+    var Laser = Asteroids.Laser = function (params) {
+        params.minSpeed = Laser.SPEED;
+        params.maxSpeed = Laser.SPEED;
+        params.color = Laser.COLOR;
+        params.damage = 5;
+
+
+        Bullet.call(this, params);
+
+        this.vertices = [
+            Asteroids.Util.scalerMult(this.heading, 60),
+            Asteroids.Util.scalerMult(this.heading, 1)
+        ]
+    }    
+
+    Asteroids.Util.inherits(Laser, Bullet);
+
+    
     
     Bullet.RADIUS = 2;
     Bullet.COLOR = 'white';
     Bullet.MUZZLE_SPEED = 7;
     Bullet.MAX_SPEED = 20;
     Bullet.MIN_SPEED = 4;
+
+    Missile.MIN_SPEED = 10;
+    Missile.COLOR = "#ff2222";
+
+    Laser.SPEED = 50;
+    Laser.COLOR = '#22ff22';
 })();

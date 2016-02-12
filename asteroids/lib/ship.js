@@ -1,8 +1,9 @@
 (function () {
     var Asteroids = window.Asteroids = window.Asteroids || {};
     var MovingObject = Asteroids.MovingObject;
+    var ShipParams = Asteroids.ShipParams
 
-    var Ship = Asteroids.Ship = function (pos, game) {
+    var Ship = Asteroids.Ship = function (pos, game, offsets, projectile) {
         MovingObject.call(this, {
             pos: pos,
             vel: [0,0],
@@ -12,7 +13,10 @@
             
         });
         this.firing = 0;
-        this.heading = [0 , 1]
+        this.heading = [0 , 1];
+        this.projectile = projectile || ShipParams.projectiles[0];
+        this.offsets = offsets || ShipParams.offsets.start;
+        this.gunTimeout = 5;
     };
 
     Asteroids.Util.inherits(Ship, MovingObject);
@@ -30,28 +34,10 @@
     };
 
     Ship.prototype.fireBullet = function (letter) {
-        var heading = [0,-1];
-        
-        if (letter == 'a') {
-            heading = [-1,0];
-        } else if (letter === 's') {
-            heading = [0,1];
-        } else if (letter === 'd') {
-            heading = [1,0];
+        if (this.gunTimeout <= 0) {            
+            this.multiShoot(this.projectile, this.offsets, this.heading);
+            this.gunTimeout = 8;
         }
-        
-
-        this.game.bullets.push(new Asteroids.Bullet(this.pos, this.vel, this.game, heading));
-        this.game.bullets.push(new Asteroids.Bullet(
-            Asteroids.Util.vecAdd(this.pos, Asteroids.Util.normal(heading, 5)),
-            this.vel,
-            this.game,
-            heading));
-        this.game.bullets.push(new Asteroids.Bullet(
-            Asteroids.Util.vecAdd(this.pos, Asteroids.Util.normal(heading, -5)),
-            this.vel,
-            this.game,
-            heading));        
     };
 
     Ship.prototype.draw = function(ctx) {
@@ -98,11 +84,9 @@
 
             this.firing -= 1;
         }
-    };
 
-    Ship.RADIUS = 15;
-    Ship.COLOR = 'blue';
-    Ship.IMPULSE_SENSITIVITY = 2;
+        if (this.gunTimeout > 0) this.gunTimeout -= 1;
+    };
 
     Ship.prototype.left = function () {
         this.power([-1 * Ship.IMPULSE_SENSITIVITY,0]);
@@ -119,6 +103,23 @@
     Ship.prototype.down = function () {
         this.power([0, 1 * Ship.IMPULSE_SENSITIVITY]);
     };
+
+    Ship.prototype.multiShoot = function (projectile, offsets, heading) {
+        offsets.forEach(function (offset) {
+            this.game.bullets.push(new projectile({
+                pos: Asteroids.Util.vecAdd(this.pos, offset.pos(heading)),
+                shipVel: this.vel,
+                game: this.game,
+                heading: Asteroids.Util.rotate(heading, offset.headingRotation)
+            }));
+
+        }.bind(this))
+    };
+
+
+
+
+    
 
     var AltShip = Asteroids.AltShip = function () {
         Ship.apply(this, arguments);
@@ -145,28 +146,8 @@
     AltShip.prototype.down = function () {
     };
 
-    AltShip.prototype.fireBullet = function (letter) {
-        var heading = this.heading
-        
-        this.game.bullets.push(new Asteroids.Bullet({
-            pos: Asteroids.Util.vecAdd(this.pos, Asteroids.Util.scalerMult(heading, 6)),
-            shipVel: this.vel,
-            game: this.game,
-            heading: heading
-        }));
-        this.game.bullets.push(new Asteroids.Bullet({
-            pos: Asteroids.Util.vecAdd(this.pos, Asteroids.Util.normal(heading, 6)),
-            shipVel: this.vel,
-            game: this.game,
-            heading: Asteroids.Util.rotate(heading, -0.2)
-        }));        
-        this.game.bullets.push(new Asteroids.Bullet({
-            pos: Asteroids.Util.vecAdd(this.pos, Asteroids.Util.normal(heading, -6)),
-            shipVel: this.vel,
-            game: this.game,
-            heading: Asteroids.Util.rotate(heading, 0.2)
-        }));        
-    };
-
+    Ship.RADIUS = 10;
+    Ship.COLOR = '#bbbbbb';
+    Ship.IMPULSE_SENSITIVITY = 2;    
     
 })();

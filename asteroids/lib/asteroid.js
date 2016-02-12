@@ -72,7 +72,7 @@
     };
 
 
-    Asteroids.Asteroid.COLOR = 'grey'; 
+    Asteroids.Asteroid.COLOR = '#111111'; 
     Asteroids.Asteroid.RADIUS = 40;
 
     console.log(Asteroids.Util);

@@ -9,7 +9,7 @@
         this.objectColor = params.objectColor || 'black';
         this.strokeColor = params.strokeColor || 'white';
         this.game = params.game;
-        this.heading = [0,1];
+        this.heading = params.heading || [0,1];
         this.vertices = params.vertices || [];
         if (params.vertices) {
             this.lengths = params.vertices.map(Asteroids.Util.vecLength);
