@@ -41,81 +41,155 @@
             $(".instr-Jonathan").append(" You Can Do It! ");
         }
     }
-    
-    GameView.prototype.bindKeyHandlers = function () {
+
+    GameView.prototype.keyDown = function (event) {
+       
         var ship = this.game.ship;
-        
-        key('left', function () {
+        switch(event.keyIdentifier) {
+
+
+        case "Right":
             if (this.unPaused) {
-               ship.left();
-            } else {
-                this.menu.left();
-            }
-        }.bind(this));
-        
-        key('right', function () {
-            if (this.unPaused) {
-               ship.right();
+                ship.right();
             } else {
                 this.menu.right();
             }
-        }.bind(this));
+            break;
         
-        key('up', function () {
+        case "Left":
             if (this.unPaused) {
-               ship.up();
+                ship.left();
+            } else {
+                this.menu.left();
+            }
+            break;
+            
+        case "Up":
+            if (this.unPaused) {
+                ship.up();
             } else {
                 this.menu.up();
             }
-        }.bind(this));
-        
-        key('down', function () {
+            break;
+            
+        case "Down":
             if (this.unPaused) {
-               ship.down();
+                ship.down();
             } else {
-                menu.down();
+                this.menu.down();
             }
-        }.bind(this));
-        
-        key('w', function (){
-            if (this.unPaused) {
-                ship.fireBullet('w');
-            } else {
-                this.menu.select();
-            }
-        }.bind(this));
-        
-        key('space', function (){
+            break;
+        }
+    };
+
+    GameView.prototype.keyUp = function (event) {
+      
+        var ship = this.game.ship;
+
+        switch(event.keyIdentifier) {
+
+        case "U+0020":
             if (this.unPaused) {
                 ship.fireBullet('w');
             } else {
                 this.menu.buy();
             }
-        }.bind(this));
-        
-        key('a', function (){
+            break;
+
+        case "Control":
             if (this.unPaused) {
-                ship.fireBullet('a');
-            } else {
-                this.menu.select();
-            }
-        }.bind(this));
-        
-        key('s', function (){
-            if (this.unPaused) {
-                ship.fireBullet('s');
-            } else {
-                this.menu.select();
-            }
-        }.bind(this));
-        
-        key('d', function (){
-            if (this.unPaused) {
-                ship.fireBullet('d');
+                ship.fireBullet('w');
             } else {
                 this.menu.buy();
             }
-        }.bind(this));
+            break;
+        
+        default:
+            if (this.unPaused) {
+                ship.stop(event.keyIdentifier);        
+            }
+            break;
+        }
+        
+    };
+    
+    GameView.prototype.bindKeyHandlers = function () {
+        var ship = this.game.ship;
+
+        document.addEventListener('keydown', this.keyDown.bind(this));
+        document.addEventListener('keyup', this.keyUp.bind(this));
+        
+        // key('left', function () {
+        //     if (this.unPaused) {
+        //        ship.left();
+        //     } else {
+        //         this.menu.left();
+        //     }
+        // }.bind(this));
+        
+        // key('right', function () {
+        //     if (this.unPaused) {
+        //        ship.right();
+        //     } else {
+        //         this.menu.right();
+        //     }
+        // }.bind(this));
+        
+        // key('up', function () {
+        //     if (this.unPaused) {
+        //        ship.up();
+        //     } else {
+        //         this.menu.up();
+        //     }
+        // }.bind(this));
+        
+        // key('down', function () {
+        //     if (this.unPaused) {
+        //        ship.down();
+        //     } else {
+        //         menu.down();
+        //     }
+        // }.bind(this));
+        
+        // key('w', function (){
+        //     if (this.unPaused) {
+        //         ship.fireBullet('w');
+        //     } else {
+        //         this.menu.select();
+        //     }
+        // }.bind(this));
+        
+        // key('space', function (){
+        //     if (this.unPaused) {
+        //         ship.fireBullet('w');
+        //     } else {
+        //         this.menu.buy();
+        //     }
+        // }.bind(this));
+        
+        // key('a', function (){
+        //     if (this.unPaused) {
+        //         ship.fireBullet('a');
+        //     } else {
+        //         this.menu.select();
+        //     }
+        // }.bind(this));
+        
+        // key('s', function (){
+        //     if (this.unPaused) {
+        //         ship.fireBullet('s');
+        //     } else {
+        //         this.menu.select();
+        //     }
+        // }.bind(this));
+        
+        // key('d', function (){
+        //     if (this.unPaused) {
+        //         ship.fireBullet('d');
+        //     } else {
+        //         this.menu.buy();
+        //     }
+        // }.bind(this));
         
         key('p', function () {
             this.togglePause();

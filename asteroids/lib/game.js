@@ -4,7 +4,7 @@
     var Util = Asteroids.Util;
 
     var Game = Asteroids.Game = function(width, height){
-        this.moneys = 10000;
+        this.moneys = 0;
         this.lives = Game.STARTING_LIVES;
         this.level = 1;
         this.width = width;
@@ -100,10 +100,6 @@
     };
 
     Game.prototype.addAsteroid = function (asteroid) {
-        // while (this.areCollisionsWithThis(asteroid)) {
-        //     asteroid.pos = Util.vecAdd(asteroid.pos, Util.randomVec(1));
-        // }                      
-
         this.asteroids.push(asteroid);
     };
 
@@ -116,11 +112,11 @@
             object.draw(ctx);
         });
 
-        this.reportScore(this.score);
-        this.reportLives(this.lives);
+        this.reportScore();
+        this.reportLives();
     };
 
-    Game.prototype.reportScore = function (score) {
+    Game.prototype.reportScore = function () {
         var moneyThing = document.getElementById("money-figure");
 
         if (moneyThing.getAttribute("money") != this.moneys) {
@@ -143,6 +139,8 @@
     };
 
     Game.prototype.moveObjects = function () {
+        this.ship.act();
+        
         this.allObjects().forEach(function(object) {
             object.move();
         });
@@ -153,21 +151,21 @@
         pos = Util.vecAdd(pos, [offset, offset])
         return [(pos[0] + this.width + 2*offset) % (this.width + 2*offset) - offset,
                 (pos[1] + this.height + 2*offset) % (this.height + 2*offset) - offset];
-  };
+    };
 
-  Game.prototype.checkCollisions = function () {
-    var i;
-    var j;
-    var objects = this.allObjects();
-    for (i = 0; i < objects.length - 1; i++) {
-     for (var j = i + 1; j < objects.length; j++) {
-        if (objects[i].isCollideWith(objects[j])) {
-          objects[i].collideWith(objects[j]);
-          objects[j].collideWith(objects[i]);
+    Game.prototype.checkCollisions = function () {
+        var i;
+        var j;
+        var objects = this.allObjects();
+        for (i = 0; i < objects.length - 1; i++) {
+            for (var j = i + 1; j < objects.length; j++) {
+                if (objects[i].isCollideWith(objects[j])) {
+                    objects[i].collideWith(objects[j]);
+                    objects[j].collideWith(objects[i]);
+                }
+            }
         }
-      }
-    }
-  };
+    };
 
     Game.prototype.areCollisionsWithThis = function (object) {
         var objects = this.allObjects();
@@ -186,25 +184,25 @@
         this.checkCollisions();
     };
 
-  Game.prototype.removeAsteroid = function (asteroid) {
-    this.asteroids = this.asteroids.filter(function (otherAsteroid) {
-      return otherAsteroid != asteroid;
-    });
-  };
+    Game.prototype.removeAsteroid = function (asteroid) {
+        this.asteroids = this.asteroids.filter(function (otherAsteroid) {
+            return otherAsteroid != asteroid;
+        });
+    };
 
-  Game.prototype.removeBullet = function (bullet) {
-    this.bullets = this.bullets.filter(function (otherBullet) {
-      return otherBullet !== bullet;
-    });
-  };
+    Game.prototype.removeBullet = function (bullet) {
+        this.bullets = this.bullets.filter(function (otherBullet) {
+            return otherBullet !== bullet;
+        });
+    };
 
-  Game.prototype.allObjects = function() {
-    return (this.asteroids.concat([this.ship]).concat(this.bullets));
-  };
+    Game.prototype.allObjects = function() {
+        return (this.asteroids.concat([this.ship]).concat(this.bullets));
+    };
 
-  Game.prototype.outOfBounds = function(pos) {
-    return (0 > pos[0]) || (0 > pos[1]) || (this.width < pos[0]) || (this.height < pos[1]);
-  };
+    Game.prototype.outOfBounds = function(pos) {
+        return (0 > pos[0]) || (0 > pos[1]) || (this.width < pos[0]) || (this.height < pos[1]);
+    };
     
     Game.prototype.getPaid = function (amount) {
         game.moneys += amount;

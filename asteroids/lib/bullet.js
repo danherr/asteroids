@@ -91,7 +91,7 @@
 
         this.vertices = [
             Asteroids.Util.vecAdd(
-                Asteroids.Util.scalerMult(this.heading, 60),
+                Asteroids.Util.scalerMult(this.heading, params.radius),
                 Asteroids.Util.normal(this.heading, 1)),
             Asteroids.Util.vecAdd(
                 Asteroids.Util.scalerMult(this.heading, 1),
@@ -100,7 +100,7 @@
                 Asteroids.Util.scalerMult(this.heading, 1),
                 Asteroids.Util.normal(this.heading, -1)),
             Asteroids.Util.vecAdd(
-                Asteroids.Util.scalerMult(this.heading, 60),
+                Asteroids.Util.scalerMult(this.heading, params.radius),
                 Asteroids.Util.normal(this.heading, -1))
         ]
     }    
@@ -118,6 +118,6 @@
     Missile.MIN_SPEED = 10;
     Missile.COLOR = "#ff2222";
 
-    Laser.SPEED = 50;
+    Laser.SPEED = 40;
     Laser.COLOR = '#22ff22';
 })();

@@ -115,10 +115,13 @@
             $("#" + menuItem.DomId).append(this.menuItemInnerHTML(menuItem));
             this.equip(menuItem);
         }
+
+        this.game.reportScore();
     };
 
     Menu.prototype.equip = function (menuItem) {
         menuItem = menuItem || this.menuData[this.selectedIdx];
+
         if (menuItem.owned) {
             var code = menuItem.code;
             if (typeof menuItem.owned === "number") {
@@ -129,8 +132,9 @@
         }
     };
 
-    Menu.prototype.unEquip = function () {
+    Menu.prototype.unEquip = function (menuItem) {
         menuItem = menuItem || this.menuData[this.selectedIdx];
+
         if (menuItem.equipped) {
             this.game.ship.equipment[menuItem.type] = menuItem.unCode;
         }
@@ -199,6 +203,24 @@
             cost: 100,
             top: true,
         },
+        {
+            name: "Gun Cooling",
+            DomId: "firing-speed",            
+            description: [
+                "A better cooling system will let you shoot faster.",
+                "Cooling level two.",
+                "You'd need to be a robot to fire this fast.",
+                "Your Gun is as fast as its going to get.",
+            ],
+            equipped: false,
+            owned: 0,
+            type: "gunTimeout",
+            code: [10, 8, 6, 4],
+            unCode: 10,
+            cost: 50,
+            costGrowth: 5,
+            top: 3,
+        },        
         {
             name: "Bullet",
             DomId: "bullet",

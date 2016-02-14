@@ -18,7 +18,7 @@
         this.equipment = {
             projectile: projectile || ShipParams.projectiles[0],
             offsets: offsets || ShipParams.offsets.start,
-            timeOut: 10,
+            gunTimeout: 10,
         }
         this.vertices = [0, 2.3, 3.92].map(function (angle) {
             return Asteroids.Util.transform(this.heading, angle, this.radius);
@@ -42,7 +42,7 @@
     Ship.prototype.fireBullet = function (letter) {
         if (this.gunTimeout <= 0) {            
             this.multiShoot(this.equipment.projectile, this.equipment.offsets, this.heading);
-            this.gunTimeout = this.equipment.timeOut;
+            this.gunTimeout = this.equipment.gunTimeout;
         }
     };
 
@@ -91,8 +91,6 @@
             this.enginesFiring -= 1;
         }
 
-        if (this.gunTimeout > 0) this.gunTimeout -= 1;
-        if (this.equipment.gunner) this.fireBullet();
     };
 
     Ship.prototype.left = function () {
@@ -123,36 +121,65 @@
         }.bind(this))
     };
 
+    Ship.prototype.act = function () {};
+
 
     
 
     var AltShip = Asteroids.AltShip = function () {
         Ship.apply(this, arguments);
+
+        this.turning = 0;
+        this.moving = 0;
     };
     Asteroids.Util.inherits(AltShip, Ship);
 
-    AltShip.TURNING_SENSITIVITY = 0.2;
+    AltShip.TURNING_SENSITIVITY = 0.1;
+
+    AltShip.prototype.act = function () {
+       
+        if (this.gunTimeout > 0) this.gunTimeout -= 1;
+        if (this.equipment.gunner) this.fireBullet();
+
+        var direction = Asteroids.Util.direction(this.heading);
+        
+        direction = direction + (this.turning * AltShip.TURNING_SENSITIVITY);
+        this.heading = Asteroids.Util.unitVec(direction);
+
+
+        if (this.moving > 0) {
+            this.power(Asteroids.Util.scalerMult(
+                this.heading,
+                (this.moving * Ship.IMPULSE_SENSITIVITY)
+            ));
+        }
+    }
 
     AltShip.prototype.left = function () {
-        var direction = Asteroids.Util.direction(this.heading);
-        direction = direction - AltShip.TURNING_SENSITIVITY;
-        this.heading = Asteroids.Util.unitVec(direction);
+        this.turning = - 1;
     };
 
     AltShip.prototype.right = function () {
-        var direction = Asteroids.Util.direction(this.heading);
-        this.heading = Asteroids.Util.unitVec(direction + AltShip.TURNING_SENSITIVITY);
+        this.turning = 1;
     };
 
     AltShip.prototype.up = function () {
-        this.power(Asteroids.Util.scalerMult(this.heading, Ship.IMPULSE_SENSITIVITY));
+        this.moving = 1;
     };
+
+    AltShip.prototype.stop = function (key) {
+        if (key === "Left" || key === "Right"){
+            this.turning = 0;
+        } else if (key === "Up") {
+            this.moving = 0;
+        }
+    }
 
     AltShip.prototype.down = function () {
     };
 
     Ship.RADIUS = 10;
     Ship.COLOR = '#bbbbbb';
-    Ship.IMPULSE_SENSITIVITY = 2;    
+    Ship.IMPULSE_SENSITIVITY = 0.5;    
     
 })();
