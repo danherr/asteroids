@@ -1,5 +1,5 @@
 
-article, html, body, canvas, section, figure {
+article, html, body, canvas, section, figure, p {
     padding: 0;
     margin: 0;
     border: 0;
@@ -42,8 +42,9 @@ canvas {
 
 .left-bar {
     float: left;
-    width: 180px;
+    width: 200px;
     padding: 20px;
+    height: 100%;
 }
 
 .right-bar {
@@ -51,19 +52,25 @@ canvas {
     padding: 20px;
 }
 
+.menu-item {
+    background: #888888;
+    padding: 10px 0 10px 10px;
+    height: 75px;
+}
+
 .menu .selected {
-    color: #;
+    color: #000;
     background: #ddd;
 }
 
-.menu-item > .description {
+.description {
     display: none;
-    color: blue
 }
 
-.menu .selected .description {
+.selected .description {
     display: block;
 }
+
 
 .hideme {
     display: none !important;

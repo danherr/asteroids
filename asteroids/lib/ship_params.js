@@ -24,6 +24,7 @@
             start: [ makeOffset(6,0,0) ],
             multi:
             [
+                [ makeOffset(6,0,0) ],
                 [
                     makeOffset(3,3,0),
                     makeOffset(3,-3,0)
@@ -49,6 +50,7 @@
             ],
             spread:
             [
+                [ makeOffset(6,0,0) ],
                 [
                     makeOffset(3,3,-0.1),
                     makeOffset(3,-3,0.1)

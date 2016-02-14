@@ -6,6 +6,7 @@
         this.pos = params.pos || [0,0];
         this.vel = params.vel || [0,1];
         this.radius = params.radius || 5;
+        this.innerRadius = params.innerRadius || this.radius * 0.3;
         this.objectColor = params.objectColor || 'black';
         this.strokeColor = params.strokeColor || 'white';
         this.game = params.game;
@@ -72,13 +73,13 @@
     };
 
     MovingObject.prototype.isCollideWith = function (otherObject) {
-        if (Asteroids.Util.metric(this.pos, otherObject.pos)
-            <=
-            (this.radius + otherObject.radius)) {
+        var distance = Asteroids.Util.metric(this.pos, otherObject.pos);
+        if (distance <= (this.radius + otherObject.radius)) {
+            if (distance <= this.innerRadius + otherObject.innerRadius) return true;
             
             return Asteroids.Util.theyCollide(this.absVertices(), otherObject.absVertices());
         }
-        
+                                             
         return false;
     };
 

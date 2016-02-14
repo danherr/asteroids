@@ -82,6 +82,7 @@
         params.color = Laser.COLOR;
         params.damage = 5;
         params.radius = 60;
+        params.innerRadius = 2;
 
 
         Bullet.call(this, params);

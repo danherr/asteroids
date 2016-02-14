@@ -9,57 +9,53 @@
         this.nextMenu = params.nextMenu || this;
         this.prevMenu = params.prevMenu || this;
         
-        this.inventory = this.initialInventory();
-        this.shopItems = this.initialShopItems();
         this.changed = true;
         this.menuData = this.constructor.INITIAL_MENU_DATA;
- 
-        this.reBuildMenu();
+        this.selectedIdx = 0;
+        
+        this.reDrawMenu();
     };
 
-    Menu.prototype.reBuildMenu = function () {
+    Menu.prototype.reDrawMenu = function () {
         this.JQDomElement.empty();
         
         this.menuData.forEach( function (menuItem) {
-            var description;
-
-            if (typeof menuItem.owned === "boolean") {
-                description = menuItem.owned ? menuItem.description[1] : menuItem.description[0];
-            } else {
-                description = menuItem.description[menuItem.owned];
-            }
             
-            var htmlString = "<p id=\""
-                + menuItem.DomId
-                + "\" class=\"menu-item "
-                + (menuItem.selected ? "selected" : "")
-                + "\" > "
-                + menuItem.name
-                + " <div class=\"description\"> "
-                + description
-                + " </div> </p>";
-            
-            this.JQDomElement.append(htmlString)
+            var htmlString = this.menuItemHTML(menuItem);
+            this.JQDomElement.append($(htmlString))
 
             
         }.bind(this))        
     }
 
-    Menu.prototype.getOptions = function () {
-        
+    Menu.prototype.menuItemHTML = function (menuItem) {
+       return "<div id=\""
+            + menuItem.DomId
+            + "\" class=\"menu-item "
+            + (menuItem.selected ? "selected" : "")
+            + "\" > "
+            + this.menuItemInnerHTML(menuItem);
+            + " </div>";
     }
 
-    Menu.prototype.initialShopItems = function () {
-        return {};
-    };
+    Menu.prototype.menuItemInnerHTML = function (menuItem) {
+        var description;
 
-    Menu.prototype.initialInventory = function () {
-        return {};
-    };
-   
+        if (typeof menuItem.owned === "boolean") {
+            description = menuItem.owned ? menuItem.description[1] : menuItem.description[0];
+        } else {
+            description = menuItem.description[menuItem.owned];
+        }
+
+        return "<p> "
+            + menuItem.name
+            + "</p> <p class=\"description\"> "
+            + description
+            + " </p> ";
+    }
 
     Menu.prototype.up = function () {
-        debugger
+        
         $("#" + this.menuData[this.selectedIdx].DomId).removeClass("selected");
         this.selectedIdx -= 1;
 
@@ -102,8 +98,42 @@
         $("#" + this.menuData[this.selectedIdx].DomId).addClass("selected");                
     };
     
-    Menu.prototype.select = function () {
-        
+    Menu.prototype.buy = function () {
+        var menuItem = this.menuData[this.selectedIdx];
+
+        if (menuItem.owned !== menuItem.top && this.game.moneys >= menuItem.cost) {
+            this.game.moneys -= menuItem.cost;
+
+            if (typeof menuItem.owned === "number") {
+                menuItem.cost *= menuItem.costGrowth;
+                menuItem.owned += 1;
+            } else {
+                menuItem.owned = true;                
+            }
+
+            $("#" + menuItem.DomId).empty();
+            $("#" + menuItem.DomId).append(this.menuItemInnerHTML(menuItem));
+            this.equip(menuItem);
+        }
+    };
+
+    Menu.prototype.equip = function (menuItem) {
+        menuItem = menuItem || this.menuData[this.selectedIdx];
+        if (menuItem.owned) {
+            var code = menuItem.code;
+            if (typeof menuItem.owned === "number") {
+                code = code[menuItem.owned];
+            }
+            this.game.ship.equipment[menuItem.type] = code;
+            menuItem.equipped = true;
+        }
+    };
+
+    Menu.prototype.unEquip = function () {
+        menuItem = menuItem || this.menuData[this.selectedIdx];
+        if (menuItem.equipped) {
+            this.game.ship.equipment[menuItem.type] = menuItem.unCode;
+        }
     };
 
     var WeaponMenu = Asteroids.WeaponMenu = function (params) {
@@ -125,8 +155,10 @@
             owned: 0,
             type: "offsets",
             code: ShipParams.offsets.multi,
+            unCode: ShipParams.offsets.start,
             cost: 40,
             costGrowth: 5,
+            top: 4,
             selected: true,
         },
         {
@@ -141,11 +173,12 @@
             ],
             equipped: false,
             owned: 0,
-            max: 4,
             type: "offsets",
             code: ShipParams.offsets.spread,
+            unCode: ShipParams.offsets.start,            
             cost: 40,
             costGrowth: 5,
+            top: 4,
         },
         {
             name: "GunnerBot",
@@ -162,7 +195,9 @@
             equipped: false,
             type: "gunner",
             code: true,
+            unCode: false,
             cost: 100,
+            top: true,
         },
         {
             name: "Bullet",
@@ -175,7 +210,9 @@
             owned: true,
             type: "projectile",
             code: Asteroids.Bullet,
-            cost: 0
+            unCode: Asteroids.Bullet,            
+            cost: 0,
+            top: true,
         },
         {
             name: "Missile",
@@ -188,24 +225,25 @@
             owned: false,
             type: "projectile",
             code: Asteroids.Missile,
+            unCode: Asteroids.Bullet,            
             cost: 100,
+            top: true,
         },
         {
             name: "Laser",
             DomId: "laser",
             description: [
-                "Professor Vectron's ray of ultradeath.  And at quite a markdown.",
+                "Professor Vectron's ray of ultradeath.  And its on sale!",
                 "Professor Vectron's ultradeath ray clears an Asteroid field pretty well."   
             ],
             equipped: false,
             owned: false,
             type: "projectile",
             code: Asteroids.Laser,
+            unCode: Asteroids.Bullet,            
             cost: 500,
+            top: true,
         }
-        
-        
-        
     ]
 
     Asteroids.Util.inherits(WeaponMenu, Menu);

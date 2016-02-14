@@ -4,7 +4,7 @@
     var Util = Asteroids.Util;
 
     var Game = Asteroids.Game = function(width, height){
-        this.moneys = 0;
+        this.moneys = 10000;
         this.lives = Game.STARTING_LIVES;
         this.level = 1;
         this.width = width;
