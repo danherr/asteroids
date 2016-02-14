@@ -1,0 +1,83 @@
+
+article, html, body, canvas, section, figure, p {
+    padding: 0;
+    margin: 0;
+    border: 0;
+
+    background: transparent;
+
+    font: inherit;
+}
+
+h1 {
+    text-align: center;
+}
+
+body {
+    background: #cccccc;
+    overflow: hidden;
+}
+
+canvas {
+    border: 2px solid #888;
+    margin: auto;
+    display: block;
+}
+
+.asteroids-game {
+    position: relative;
+}
+
+.instructions p {
+    margin: auto;
+    display: block;
+    text-align: center;
+}
+
+.info-figure {
+    opacity: 0.7;
+    color: #111;
+    display: block;
+}
+
+.left-bar {
+    float: left;
+    width: 200px;
+    padding: 20px;
+    height: 100%;
+}
+
+.right-bar {
+    float: right;
+    padding: 20px;
+}
+
+.menu-item {
+    background: #888888;
+    padding: 10px 0 10px 10px;
+    height: 75px;
+}
+
+.menu .selected {
+    color: #000;
+    background: #ddd;
+}
+
+.description {
+    display: none;
+}
+
+.selected .description {
+    display: block;
+}
+
+
+.hideme {
+    display: none !important;
+}
+
+.clearfix:before {
+    content: "";
+    display: block;
+    clear: both;
+}

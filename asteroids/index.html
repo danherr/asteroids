@@ -1,0 +1,72 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="lib/game_style.css"></style>
+</head>
+<body class="clearfix">
+
+  <h1>Asteroids Like Thing</h1>
+
+
+  <section class="asteroids-game clearfix">
+
+    <section class = "left-bar">
+      <figure id="money-figure" class="money info-figure"
+              money="0">You Have No Money!</figure>
+      <figure id="weapons-menu" class="weapons-menu menu"></figure>
+    </section>
+
+    <section class = "right-bar">    
+      <figure id="lives-figure" class="lives info-figure"
+              lives="5">You Have 5 Lives</figure>
+      <figure id="shields-menu" class="shields-menu menu"></figure>
+    </section>
+    
+    <canvas id="asteroids-canvas">
+    </canvas>
+    
+  </section>
+
+  <article class="instructions">
+    <p class="instr-lr instruction"> Left and Right to Turn </p>
+    <p class="instr-ud instruction"> Up to move </p>
+    <p class="instr-shoot instruction"> Space or W to Shoot </p>
+    <p class="instr-pause instruction"> P to Pause </p>
+    <p class="instr-general instruction"> Upgrade to Survive. </p>
+    <p class="instr-Jonathan instruction"> You Can Do It! </p>
+  </article>
+
+  <script src="not_invented_here/keymaster/keymaster.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
+  <script src="lib/utils.js"></script>
+  <script src="lib/movingObject.js"></script>
+  <script src="lib/asteroid.js"></script>
+  <script src="lib/bullet.js"></script>
+  <script src="lib/ship_params.js"></script>    
+  <script src="lib/ship.js"></script>
+  <script src="lib/game.js"></script>
+  <script src="lib/menu.js"></script>
+  <script src="lib/gameView.js"></script>
+  <script type="text/javascript">
+    var canvasEl = document.getElementById("asteroids-canvas");
+    canvasEl.height = Math.min(window.innerHeight - 200, 600);
+    canvasEl.width = Math.min(window.innerWidth - 10, 800);
+    ctx = canvasEl.getContext("2d");
+    var game = new window.Asteroids.Game(
+      canvasEl.width,
+      canvasEl.height
+    );
+    
+    var menu = new window.Asteroids.WeaponMenu({
+        game: game,
+        JQDomElement: $("#weapons-menu"),
+    });
+    
+    new window.Asteroids.GameView(game, ctx, menu).start();
+  </script>
+
+</body>
+</html>
