@@ -18,6 +18,7 @@
             this.lengths = [];
             this.directions = [];
         }
+        this.absVertexCache = {};
     };
 
     MovingObject.randomVertices = function (num, length) {
@@ -29,12 +30,30 @@
         return directions.map(function (direction) {
             var vec = Asteroids.Util.unitVec(direction);
             vec = Asteroids.Util.scalerMult(vec, length);
-            if (Math.random() < 0.4) {
-                vec = Asteroids.Util.scalerMult(vec, 0.8);
-            }
+             if (Math.random() < 0.4) {
+                 vec = Asteroids.Util.scalerMult(vec, 0.8);
+             }
             return vec;
         });
+       
     }
+
+    MovingObject.prototype.edges = function () {
+        var output = [];
+        
+        if (this.vertices.length >= 2) {
+            for (var i = 1; i < this.vertices.length; i++) {
+                output.push([this.vertices[i-1], this.vertices[i]]);
+            };
+
+            output.push([
+                this.vertices[this.vertices.length - 1],
+                this.vertices[0]
+            ]);
+        }
+
+        return output;
+    };
 
     MovingObject.prototype.draw = function(ctx) {
         var vertices = this.vertices.map(function (vertex) {
@@ -42,6 +61,7 @@
         }.bind(this));
 
         Asteroids.Util.drawPolygon(ctx, vertices, this.objectColor, this.strokeColor)
+
     };
 
     
@@ -52,8 +72,27 @@
     };
 
     MovingObject.prototype.isCollideWith = function (otherObject) {
-        return Asteroids.Util.metric(this.pos, otherObject.pos) <= (this.radius + otherObject.radius);
+        if (Asteroids.Util.metric(this.pos, otherObject.pos)
+            <=
+            (this.radius + otherObject.radius)) {
+            
+            return Asteroids.Util.theyCollide(this.absVertices(), otherObject.absVertices());
+        }
+        
+        return false;
     };
+
+    MovingObject.prototype.absVertices = function () {
+        if (this.absVertexCache.pos !== this.pos) {
+            this.absVertexCache.vertices = this.vertices.map( function (vertex) {
+                return Asteroids.Util.vecAdd(this.pos, vertex);
+            }.bind(this));
+        } else {
+            debugger
+        }
+
+        return this.absVertexCache.vertices;
+    }
 
     MovingObject.prototype.collideWith = function (otherObject) {
     };

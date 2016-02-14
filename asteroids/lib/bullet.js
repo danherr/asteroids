@@ -44,11 +44,14 @@
 
     Bullet.prototype.collideWith = function (otherObject) {
         if (otherObject instanceof Asteroids.Asteroid) {
-            otherObject.getHit(this.damage);
-            this.game.removeBullet(this);
+            var damageLeft = otherObject.getHit(this.damage);
+            if (damageLeft <= 0) {
+                this.game.removeBullet(this);
+            } else {
+                this.damage = damageLeft;
+            }
         }
     };
-
 
 
     var Missile = Asteroids.Missile = function (params) {
@@ -78,13 +81,26 @@
         params.maxSpeed = Laser.SPEED;
         params.color = Laser.COLOR;
         params.damage = 5;
+        params.radius = 60;
 
 
         Bullet.call(this, params);
 
+        this.vel = Util.scalerMult(params.heading, Laser.SPEED)
+
         this.vertices = [
-            Asteroids.Util.scalerMult(this.heading, 60),
-            Asteroids.Util.scalerMult(this.heading, 1)
+            Asteroids.Util.vecAdd(
+                Asteroids.Util.scalerMult(this.heading, 60),
+                Asteroids.Util.normal(this.heading, 1)),
+            Asteroids.Util.vecAdd(
+                Asteroids.Util.scalerMult(this.heading, 1),
+                Asteroids.Util.normal(this.heading, 1)),
+            Asteroids.Util.vecAdd(
+                Asteroids.Util.scalerMult(this.heading, 1),
+                Asteroids.Util.normal(this.heading, -1)),
+            Asteroids.Util.vecAdd(
+                Asteroids.Util.scalerMult(this.heading, 60),
+                Asteroids.Util.normal(this.heading, -1))
         ]
     }    
 

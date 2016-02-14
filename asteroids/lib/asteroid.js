@@ -20,13 +20,12 @@
 
 
         this.size = size;
-        this.vertices = Asteroids.MovingObject.randomVertices(3 * size + 5, radius);
+        this.vertices = Asteroids.MovingObject.randomVertices(3 * size + 5
+                                                              , radius);
         this.hitPoints = size;
     };
     
     Asteroids.Util.inherits(Asteroids.Asteroid, Asteroids.MovingObject);
-
-
 
     Asteroid.prototype.collideWith = function (otherObject) {
       if (otherObject instanceof Asteroids.Ship) {
@@ -53,7 +52,12 @@
 
     Asteroid.prototype.getHit = function (damage) {
         this.hitPoints -= damage;
-        if (this.hitPoints <= 0) this.die();
+        if (this.hitPoints <= 0) {
+            this.die();
+            return Math.abs(this.hitPoints);
+        } else {
+            return 0;
+        }        
     };
     
     Asteroid.prototype.die = function () {
@@ -64,7 +68,7 @@
                 this.game.addAsteroid(new Asteroids.Asteroid(this.pos, this.game, nuSize));      
             }
         } else {
-            this.game.moneys += 5;
+            this.game.getPaid(5);
             this.game.level = Math.max(Math.log(this.game.moneys / 5), 1);
         }
 

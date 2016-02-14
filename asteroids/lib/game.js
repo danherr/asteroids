@@ -12,14 +12,39 @@
         this.asteroids = [];
         this.ship = new Asteroids.AltShip(this.shipStartPosition(), this);
         this.bullets = [];
+        this.difficulty = 1;
     };
 
-    Game.STARTING_ASTEROIDS = 5;
+    Game.STARTING_ASTEROIDS = 1;
     Game.STARTING_LIVES = 5;
 
-    Game.randomPos = function (width, height) {
-        var xCoord = Util.randomInRange(Asteroid.RADIUS, width - Asteroid.RADIUS);
-        var yCoord = Util.randomInRange(Asteroid.RADIUS, height - Asteroid.RADIUS);
+    Game.randomPos = function (width, height, interior) {
+        var xCoord, yCoord;
+        if (interior) {
+            xCoord = Util.randomInRange(Asteroid.RADIUS, width - Asteroid.RADIUS);
+            yCoord = Util.randomInRange(Asteroid.RADIUS, height - Asteroid.RADIUS);
+        } else {
+            var d4 = (Math.floor(Math.random() * 4));
+            switch (d4) {
+            case 0:
+                xCoord = Util.randomInRange(0, width);
+                yCoord = 0;
+                break;
+            case 1:
+                xCoord = Util.randomInRange(0, width);
+                yCoord = height;
+                break;
+            case 2:
+                yCoord = Util.randomInRange(0, height);
+                xCoord = 0;
+                break;
+            case 3:
+                yCoord = Util.randomInRange(0, height);
+                xCoord = width;
+                break;
+            }
+        }
+        
         return [xCoord, yCoord];
     };
 
@@ -39,7 +64,7 @@
     };
 
     Game.prototype.addNewThings = function () {
-        if (Math.random() > 0.9999) {
+        if (Math.random() > (1 - (this.difficulty / 1000))) {
             this.addAsteroid(
                 new Asteroids.Asteroid(
                     Asteroids.Game.randomPos(this.width, this.height),
@@ -47,7 +72,7 @@
                     4
                 )
             );
-        } else if (Math.random() > 0.999) {
+        } else if (Math.random() > (1 - (this.difficulty / 750))) {
             this.addAsteroid(
                 new Asteroids.Asteroid(
                     Asteroids.Game.randomPos(this.width, this.height),
@@ -55,7 +80,7 @@
                     3
                 )
             );
-        } else if (Math.random() > 0.998) {
+        } else if (Math.random() > (1 - (this.difficulty / 500))) {
             this.addAsteroid(
                 new Asteroids.Asteroid(
                     Asteroids.Game.randomPos(this.width, this.height),
@@ -63,7 +88,7 @@
                     2
                 )
             );
-        } else if (Math.random() > 0.996) {
+        } else if (Math.random() > (1 - (this.difficulty / 250))) {
             this.addAsteroid(
                 new Asteroids.Asteroid(
                     Asteroids.Game.randomPos(this.width, this.height),
@@ -90,10 +115,31 @@
         this.allObjects().forEach(function (object) {
             object.draw(ctx);
         });
+
+        this.reportScore(this.score);
+        this.reportLives(this.lives);
     };
 
+    Game.prototype.reportScore = function (score) {
+        var moneyThing = document.getElementById("money-figure");
+
+        if (moneyThing.getAttribute("money") != this.moneys) {
+            moneyThing.setAttribute("money", this.moneys);
+            moneyThing.innerHTML = "You Have " + this.moneys + " Moneys!";
+        }
+    };
+
+    Game.prototype.reportLives = function (lives) {
+        var livesThing = document.getElementById("lives-figure");
+
+        if (livesThing.getAttribute("lives") != this.lives) {
+            livesThing.setAttribute("lives", this.lives);
+            livesThing.innerHTML = "You Have " + this.lives + " Lives!";
+        }
+    };
+    
     Game.prototype.shipStartPosition = function () {
-        return Game.randomPos(this.width, this.height);
+        return Game.randomPos(this.width, this.height, true);
     };
 
     Game.prototype.moveObjects = function () {
@@ -159,5 +205,10 @@
   Game.prototype.outOfBounds = function(pos) {
     return (0 > pos[0]) || (0 > pos[1]) || (this.width < pos[0]) || (this.height < pos[1]);
   };
-
+    
+    Game.prototype.getPaid = function (amount) {
+        game.moneys += amount;
+        game.difficulty += (amount / 1000);
+    }
+    
 })();

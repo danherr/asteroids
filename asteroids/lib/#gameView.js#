@@ -26,7 +26,7 @@
         this.unPaused = !this.unPaused;
     }
     
-    GameView.prototype.bindKeyHandlers = function () {
+    GameView.prototype.bindKeyHandlers = function () {til
         var ship = this.game.ship;
         key('left', function () {
             if (this.unPaused) {

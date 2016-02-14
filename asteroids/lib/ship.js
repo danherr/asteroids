@@ -12,11 +12,17 @@
             game: game
             
         });
-        this.firing = 0;
+        this.Enginesfiring = 0;
         this.heading = [0 , 1];
-        this.projectile = projectile || ShipParams.projectiles[0];
-        this.offsets = offsets || ShipParams.offsets.start;
         this.gunTimeout = 5;
+        this.equipment = {
+            projectile: projectile || ShipParams.projectiles[0],
+            offsets: offsets || ShipParams.offsets.start,
+            timeOut: 10,
+        }
+        this.vertices = [0, 2.3, 3.92].map(function (angle) {
+            return Asteroids.Util.transform(this.heading, angle, this.radius);
+        }.bind(this))
     };
 
     Asteroids.Util.inherits(Ship, MovingObject);
@@ -30,24 +36,24 @@
     Ship.prototype.power = function (impulse) {
         this.heading = Asteroids.Util.normalize(impulse);
         this.vel = Asteroids.Util.vecAdd(this.vel, impulse);
-        this.firing = 5;
+        this.enginesFiring = 5;
     };
 
     Ship.prototype.fireBullet = function (letter) {
         if (this.gunTimeout <= 0) {            
-            this.multiShoot(this.projectile, this.offsets, this.heading);
-            this.gunTimeout = 8;
+            this.multiShoot(this.equipment.projectile, this.equipment.offsets, this.heading);
+            this.gunTimeout = this.equipment.timeOut;
         }
     };
 
     Ship.prototype.draw = function(ctx) {
         var heading = Asteroids.Util.direction(this.heading);
-        var vertices = [0, 2.3, 3.92].map(function (angle) {
-            return Asteroids.Util.vecAdd(
-                this.pos,
-                Asteroids.Util.transform(this.heading, angle, this.radius)
-            );
+
+        this.vertices = [0, 2.3, 3.92].map(function (angle) {
+            return Asteroids.Util.transform(this.heading, angle, this.radius);
         }.bind(this))
+        
+        var vertices = this.absVertices();
 
         ctx.lineWidth = 1;
 
@@ -55,7 +61,7 @@
 
         ctx.lineWidth = 3;
         
-        if (this.firing > 0) {
+        if (this.enginesFiring > 0) {
 
             ctx.strokeStyle = 'yellow';
 
@@ -82,10 +88,11 @@
             );
             ctx.stroke();
 
-            this.firing -= 1;
+            this.enginesFiring -= 1;
         }
 
         if (this.gunTimeout > 0) this.gunTimeout -= 1;
+        if (this.equipment.gunner) this.fireBullet();
     };
 
     Ship.prototype.left = function () {
@@ -117,8 +124,6 @@
     };
 
 
-
-
     
 
     var AltShip = Asteroids.AltShip = function () {
@@ -126,7 +131,7 @@
     };
     Asteroids.Util.inherits(AltShip, Ship);
 
-    AltShip.TURNING_SENSITIVITY = 0.5;
+    AltShip.TURNING_SENSITIVITY = 0.2;
 
     AltShip.prototype.left = function () {
         var direction = Asteroids.Util.direction(this.heading);
