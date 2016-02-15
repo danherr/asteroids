@@ -28,6 +28,14 @@
         }.bind(this))        
     }
 
+<<<<<<< HEAD
+=======
+    Menu.prototype.reDrawMenuItem = function (menuItem) {
+        $("#" + menuItem.DomId).empty();
+        $("#" + menuItem.DomId).append(this.menuItemInnerHTML(menuItem));
+    }
+
+>>>>>>> gh-pages
     Menu.prototype.menuItemHTML = function (menuItem) {
        return "<div id=\""
             + menuItem.DomId
@@ -40,6 +48,7 @@
 
     Menu.prototype.menuItemInnerHTML = function (menuItem) {
         var description;
+<<<<<<< HEAD
 
         if (typeof menuItem.owned === "boolean") {
             description = menuItem.owned ? menuItem.description[1] : menuItem.description[0];
@@ -52,6 +61,39 @@
             + "</p> <p class=\"description\"> "
             + description
             + " </p> ";
+=======
+        var nameTag = "<p>" + menuItem.name;
+        
+
+
+        if (typeof menuItem.owned === "boolean") {
+            description = menuItem.owned ? menuItem.description[1] : menuItem.description[0];
+            
+            if (menuItem.owned) nameTag += "";
+        } else {
+            description = menuItem.description[menuItem.owned];
+
+
+        }
+
+        if (menuItem.equipped) nameTag += " <i class=\"fa-right fa fa-external-link-square\"></i> ";
+        
+        nameTag += "</p>";
+        
+        var description = nameTag
+            + " <p class=\"description\"> "
+            + description
+            + " </p> ";
+        var cost = "<p class=\"description cost \"> Cost: "
+            + menuItem.cost
+            + " </p>";
+
+        if (menuItem.owned !== menuItem.top) {
+            description += cost;
+        }
+
+        return description;
+>>>>>>> gh-pages
     }
 
     Menu.prototype.up = function () {
@@ -111,8 +153,12 @@
                 menuItem.owned = true;                
             }
 
+<<<<<<< HEAD
             $("#" + menuItem.DomId).empty();
             $("#" + menuItem.DomId).append(this.menuItemInnerHTML(menuItem));
+=======
+
+>>>>>>> gh-pages
             this.equip(menuItem);
         }
 
@@ -123,12 +169,24 @@
         menuItem = menuItem || this.menuData[this.selectedIdx];
 
         if (menuItem.owned) {
+<<<<<<< HEAD
+=======
+            this.menuData.filter(function (otherMenuItem) {
+                return menuItem.type === otherMenuItem.type;
+            }).forEach(this.unEquip.bind(this));
+
+            
+>>>>>>> gh-pages
             var code = menuItem.code;
             if (typeof menuItem.owned === "number") {
                 code = code[menuItem.owned];
             }
             this.game.ship.equipment[menuItem.type] = code;
             menuItem.equipped = true;
+<<<<<<< HEAD
+=======
+            this.reDrawMenuItem(menuItem);
+>>>>>>> gh-pages
         }
     };
 
@@ -137,7 +195,13 @@
 
         if (menuItem.equipped) {
             this.game.ship.equipment[menuItem.type] = menuItem.unCode;
+<<<<<<< HEAD
         }
+=======
+            menuItem.equipped = false;
+        }
+        this.reDrawMenuItem(menuItem);        
+>>>>>>> gh-pages
     };
 
     var WeaponMenu = Asteroids.WeaponMenu = function (params) {
@@ -163,7 +227,10 @@
             cost: 40,
             costGrowth: 5,
             top: 4,
+<<<<<<< HEAD
             selected: true,
+=======
+>>>>>>> gh-pages
         },
         {
             name: "Spread Shot",

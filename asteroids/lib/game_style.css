@@ -16,11 +16,19 @@ h1 {
 body {
     background: #cccccc;
     overflow: hidden;
+<<<<<<< HEAD
+=======
+    font-family: "arial";
+>>>>>>> gh-pages
 }
 
 canvas {
     border: 2px solid #888;
+<<<<<<< HEAD
     margin: auto;
+=======
+    margin: 0;
+>>>>>>> gh-pages
     display: block;
 }
 
@@ -28,7 +36,11 @@ canvas {
     position: relative;
 }
 
+<<<<<<< HEAD
 .instructions p {
+=======
+.instructions .instruction {
+>>>>>>> gh-pages
     margin: auto;
     display: block;
     text-align: center;
@@ -42,25 +54,47 @@ canvas {
 
 .left-bar {
     float: left;
+<<<<<<< HEAD
     width: 200px;
     padding: 20px;
+=======
+    width: 250px;
+    padding: 20px 0 20px 20px;
+>>>>>>> gh-pages
     height: 100%;
 }
 
 .right-bar {
     float: right;
+<<<<<<< HEAD
     padding: 20px;
 }
 
 .menu-item {
     background: #888888;
+=======
+    padding: 20px 20px 20px 0;
+    width: 250px;
+    height: 100%;
+}
+
+.menu-item {
+>>>>>>> gh-pages
     padding: 10px 0 10px 10px;
     height: 75px;
 }
 
 .menu .selected {
     color: #000;
+<<<<<<< HEAD
     background: #ddd;
+=======
+    background: #eeeeee;
+}
+
+.fa-right {
+    float: right;
+>>>>>>> gh-pages
 }
 
 .description {
@@ -69,6 +103,10 @@ canvas {
 
 .selected .description {
     display: block;
+<<<<<<< HEAD
+=======
+    font-size: 13px;
+>>>>>>> gh-pages
 }
 
 
