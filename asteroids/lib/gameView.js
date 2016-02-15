@@ -54,8 +54,6 @@
     }
 
     GameView.prototype.keyDown = function (event) {
-
-        debugger;
         
         var ship = this.game.ship;
         switch(event.keyCode) {
