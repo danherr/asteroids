@@ -68,16 +68,11 @@
                 this.game.addAsteroid(new Asteroids.Asteroid(this.pos, this.game, nuSize));      
             }
         } else {
-<<<<<<< HEAD
-            this.game.getPaid(5);
-            this.game.level = Math.max(Math.log(this.game.moneys / 5), 1);
-=======
             
             this.game.getPaid(Math.floor(Math.random() * 6));
 
->>>>>>> gh-pages
         }
-
+        
         this.game.removeAsteroid(this);
     };
 
