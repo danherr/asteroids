@@ -6,7 +6,6 @@
     var Game = Asteroids.Game = function(width, height){
         this.moneys = 0;
         this.lives = Game.STARTING_LIVES;
-        this.level = 1;
         this.width = width;
         this.height = height;
         this.asteroids = [];
@@ -179,9 +178,15 @@
     };
 
     Game.prototype.step = function () {
-        this.addNewThings();
-        this.moveObjects();
-        this.checkCollisions();
+        if (this.lives <= 0) {
+            this.end();
+            return false;
+        } else {
+            this.addNewThings();
+            this.moveObjects();
+            this.checkCollisions();
+            return true;
+        }
     };
 
     Game.prototype.removeAsteroid = function (asteroid) {
@@ -207,6 +212,10 @@
     Game.prototype.getPaid = function (amount) {
         game.moneys += amount;
         game.difficulty += (amount / 1000);
+    }
+
+    Game.prototype.end = function () {
+        
     }
     
 })();

@@ -23,6 +23,7 @@
   GameView.IMPULSE_SENSITIVITY = 2;
 
     GameView.prototype.togglePause = function () {
+        var menuItem =  this.menu.menuData[this.menu.selectedIdx];
         this.unPaused = !this.unPaused;
         $(".instruction").empty();
         if (this.unPaused) {
@@ -32,7 +33,16 @@
             $(".instr-pause").append(" P to Pause ");
             $(".instr-general").append(" Upgrade to Survive ");
             $(".instr-Jonathan").append(" You Can Do It! ");
+
+
+            menuItem.selected = false;
+            $("#" + menuItem.DomId).removeClass("selected");
         } else {
+            
+            menuItem.selected = true;
+            $("#" + this.menu.menuData[this.menu.selectedIdx].DomId).addClass("selected");
+            
+            
             $(".instr-lr").append(" Arrows navigate the Menus ");
             $(".instr-ud").append(" Space to Buy Something ");
             $(".instr-shoot").append(" E to Equip ");

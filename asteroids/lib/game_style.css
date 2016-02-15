@@ -16,11 +16,12 @@ h1 {
 body {
     background: #cccccc;
     overflow: hidden;
+    font-family: "arial";
 }
 
 canvas {
     border: 2px solid #888;
-    margin: auto;
+    margin: 0;
     display: block;
 }
 
@@ -28,7 +29,7 @@ canvas {
     position: relative;
 }
 
-.instructions p {
+.instructions .instruction {
     margin: auto;
     display: block;
     text-align: center;
@@ -42,25 +43,30 @@ canvas {
 
 .left-bar {
     float: left;
-    width: 200px;
-    padding: 20px;
+    width: 250px;
+    padding: 20px 0 20px 20px;
     height: 100%;
 }
 
 .right-bar {
     float: right;
-    padding: 20px;
+    padding: 20px 20px 20px 0;
+    width: 250px;
+    height: 100%;
 }
 
 .menu-item {
-    background: #888888;
     padding: 10px 0 10px 10px;
     height: 75px;
 }
 
 .menu .selected {
     color: #000;
-    background: #ddd;
+    background: #eeeeee;
+}
+
+.fa-right {
+    float: right;
 }
 
 .description {
@@ -69,6 +75,7 @@ canvas {
 
 .selected .description {
     display: block;
+    font-size: 13px;
 }
 
 

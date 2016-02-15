@@ -28,6 +28,11 @@
         }.bind(this))        
     }
 
+    Menu.prototype.reDrawMenuItem = function (menuItem) {
+        $("#" + menuItem.DomId).empty();
+        $("#" + menuItem.DomId).append(this.menuItemInnerHTML(menuItem));
+    }
+
     Menu.prototype.menuItemHTML = function (menuItem) {
        return "<div id=\""
             + menuItem.DomId
@@ -40,18 +45,37 @@
 
     Menu.prototype.menuItemInnerHTML = function (menuItem) {
         var description;
+        var nameTag = "<p>" + menuItem.name;
+        
+
 
         if (typeof menuItem.owned === "boolean") {
             description = menuItem.owned ? menuItem.description[1] : menuItem.description[0];
+            
+            if (menuItem.owned) nameTag += "";
         } else {
             description = menuItem.description[menuItem.owned];
+
+
         }
 
-        return "<p> "
-            + menuItem.name
-            + "</p> <p class=\"description\"> "
+        if (menuItem.equipped) nameTag += " <i class=\"fa-right fa fa-external-link-square\"></i> ";
+        
+        nameTag += "</p>";
+        
+        var description = nameTag
+            + " <p class=\"description\"> "
             + description
             + " </p> ";
+        var cost = "<p class=\"description cost \"> Cost: "
+            + menuItem.cost
+            + " </p>";
+
+        if (menuItem.owned !== menuItem.top) {
+            description += cost;
+        }
+
+        return description;
     }
 
     Menu.prototype.up = function () {
@@ -111,8 +135,7 @@
                 menuItem.owned = true;                
             }
 
-            $("#" + menuItem.DomId).empty();
-            $("#" + menuItem.DomId).append(this.menuItemInnerHTML(menuItem));
+
             this.equip(menuItem);
         }
 
@@ -123,12 +146,18 @@
         menuItem = menuItem || this.menuData[this.selectedIdx];
 
         if (menuItem.owned) {
+            this.menuData.filter(function (otherMenuItem) {
+                return menuItem.type === otherMenuItem.type;
+            }).forEach(this.unEquip.bind(this));
+
+            
             var code = menuItem.code;
             if (typeof menuItem.owned === "number") {
                 code = code[menuItem.owned];
             }
             this.game.ship.equipment[menuItem.type] = code;
             menuItem.equipped = true;
+            this.reDrawMenuItem(menuItem);
         }
     };
 
@@ -137,7 +166,9 @@
 
         if (menuItem.equipped) {
             this.game.ship.equipment[menuItem.type] = menuItem.unCode;
+            menuItem.equipped = false;
         }
+        this.reDrawMenuItem(menuItem);        
     };
 
     var WeaponMenu = Asteroids.WeaponMenu = function (params) {
@@ -163,7 +194,6 @@
             cost: 40,
             costGrowth: 5,
             top: 4,
-            selected: true,
         },
         {
             name: "Spread Shot",
