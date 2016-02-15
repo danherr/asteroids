@@ -9,7 +9,7 @@
         var speed = 3 / size;
         var vel = Asteroids.Util.randomVec(speed);
         var radius = Asteroids.Asteroid.RADIUS * size / 2;
-        var hitPoints = size * Math.floor(game.difficulty);
+        var hitPoints = Math.floor( size * game.difficulty);
         Asteroids.MovingObject.call(this, {
             pos: pos,
             vel: vel,
