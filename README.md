@@ -6,7 +6,7 @@
 #Screen Shots
 
 ![Screen Shot 1](/images/screen_shot_1.png)
-Format: ![Alt Text](url)
+
 
 ![Screen Shot 2](/images/screen_shot_2.png)
-Format: ![Alt Text](url)
+
