@@ -23,6 +23,7 @@
   GameView.IMPULSE_SENSITIVITY = 2;
 
     GameView.prototype.togglePause = function () {
+        this.menu.selectedIdx = this.menu.selectedIdx || 0;
 
         var menuItem =  this.menu.menuData[this.menu.selectedIdx];
         this.unPaused = !this.unPaused;
