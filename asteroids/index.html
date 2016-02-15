@@ -54,7 +54,7 @@
   <script src="lib/gameView.js"></script>
   <script type="text/javascript">
     var canvasEl = document.getElementById("asteroids-canvas");
-    canvasEl.height = Math.min(window.innerHeight - 200, 600);
+    canvasEl.height = Math.min(window.innerHeight - 240);
     canvasEl.width = window.innerWidth - 545;
     ctx = canvasEl.getContext("2d");
     var game = new window.Asteroids.Game(

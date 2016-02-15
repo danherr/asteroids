@@ -34,13 +34,15 @@
     }
 
     Menu.prototype.menuItemHTML = function (menuItem) {
-       return "<div id=\""
+       var htmlText =  "<div id=\""
             + menuItem.DomId
             + "\" class=\"menu-item "
             + (menuItem.selected ? "selected" : "")
             + "\" > "
             + this.menuItemInnerHTML(menuItem);
             + " </div>";
+
+        return htmlText;
     }
 
     Menu.prototype.menuItemInnerHTML = function (menuItem) {

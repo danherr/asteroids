@@ -53,12 +53,14 @@
     }
 
     GameView.prototype.keyDown = function (event) {
-       
+
+        debugger;
+        
         var ship = this.game.ship;
-        switch(event.keyIdentifier) {
+        switch(event.keyCode) {
 
 
-        case "Right":
+        case 39:
             if (this.unPaused) {
                 ship.right();
             } else {
@@ -66,7 +68,7 @@
             }
             break;
         
-        case "Left":
+        case 37:
             if (this.unPaused) {
                 ship.left();
             } else {
@@ -74,7 +76,7 @@
             }
             break;
             
-        case "Up":
+        case 38:
             if (this.unPaused) {
                 ship.up();
             } else {
@@ -82,7 +84,7 @@
             }
             break;
             
-        case "Down":
+        case 40:
             if (this.unPaused) {
                 ship.down();
             } else {
@@ -96,9 +98,9 @@
       
         var ship = this.game.ship;
 
-        switch(event.keyIdentifier) {
+        switch(event.keyCode) {
 
-        case "U+0020":
+        case 32:
             if (this.unPaused) {
                 ship.fireBullet('w');
             } else {
@@ -106,7 +108,7 @@
             }
             break;
 
-        case "Control":
+        case 17:
             if (this.unPaused) {
                 ship.fireBullet('w');
             } else {
@@ -116,7 +118,7 @@
         
         default:
             if (this.unPaused) {
-                ship.stop(event.keyIdentifier);        
+                ship.stop(event.keyCode);        
             }
             break;
         }

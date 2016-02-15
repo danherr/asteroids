@@ -167,10 +167,10 @@
         this.moving = 1;
     };
 
-    AltShip.prototype.stop = function (key) {
-        if (key === "Left" || key === "Right"){
+    AltShip.prototype.stop = function (keyCode) {
+        if (keyCode == 39 || keyCode == 37){
             this.turning = 0;
-        } else if (key === "Up") {
+        } else if (keyCode == 38) {
             this.moving = 0;
         }
     }
