@@ -2,7 +2,7 @@
 
 A copy of Asteroids inspired by bullet-hell games. 
 
-[git-page]: http://danherr.github.io/Asteroids-thing/asteroids/
+[git-page]: http://danherr.github.io/asteroids/asteroids/
 
 # Gameplay
 
