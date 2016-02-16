@@ -8,7 +8,7 @@ A copy of Asteroids inspired by bullet-hell games.
 
 Asteroids spawn randomly at the edges of the screen, and must be destroyed. Luckily, you
 recieve money for each small asteroid, and so can afford to upgrade your ship.  Unfortunately,
-the more money you make the faster they spawn. In the long run, we are all dead.
+the more money you make the faster they spawn. In the long run, we are all  dead.
 
 # Asteroid Generation
 
