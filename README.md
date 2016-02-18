@@ -16,6 +16,8 @@ the more money you make the faster they spawn. In the long run, we are all dead.
 
 ![Screen Shot 2](/images/screen_shot_2.png)
 
+![Screen Shot 3](/images/screen_shot_3.png)
+
 # Asteroid Generation
 
 The Asteroids are randomly generated polygons. Depending on the size, each has
