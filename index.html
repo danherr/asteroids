@@ -7,68 +7,88 @@
     <title>Asteroid Hell</title>
     <link rel="stylesheet" href="lib/game_style.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-</head>
-<body class="clearfix">
-
-  <h1>Asteroid Hell</h1>
-  <section class="asteroids-game clearfix">
-
-    <section class = "left-bar">
+  </head>
+  <body class="clearfix">
+    <section class="topbar">
       <figure id="money-figure" class="money info-figure"
               money="0">You Have No Money!</figure>
-      <figure id="weapons-menu" class="weapons-menu menu"></figure>
-    </section>
-
-    <section class = "right-bar">    
+      <h1>Asteroid Hell</h1>
       <figure id="lives-figure" class="lives info-figure"
               lives="5">You Have 5 Lives</figure>
-      <figure id="shields-menu" class="shields-menu menu"></figure>
+    </section>
+
+    <section class="asteroids-game">
+
+      <canvas id="asteroids-canvas">
+      </canvas>
+      
+      <section class="asteroids-game-overlay">
+        
+        <section class = "left-bar">
+          <figure id="weapons-menu" class="weapons-menu menu hideme"></figure>
+        </section>
+
+        <section class = "right-bar">    
+          <figure id="shields-menu" class="shields-menu menu"></figure>
+        </section>
+        
+        <article class="message message-zero before-display">
+          <p> Asteroids spawn randomly at the edges of the screen, and
+          must be destroyed. </p>
+            <p> Fortunately: you receive money for small
+            ones, and can upgrade your
+          ship. </p>
+            <p> Unfortunately: the more money you make the faster and stronger they
+            spawn. </p>
+          <p> In the long run, we are all dead. </p>
+          <p> (Press Space) </p>
+        </article>
+        
+        <article class="message message-one before-display">
+          <p> <i class="fa fa-caret-square-o-left"></i>
+          and  <i class="fa fa-caret-square-o-right"></i> to
+          turn.  <i class="fa fa-caret-square-o-up"></i> to move. </p>
+          <p class="shoot"> Space or Shift to Shoot </p>
+          <p class="pause"> P to Pause and Access
+            the menu.</p>
+          <div class="easy menu-item selected" href="#"> Easy Game</div>
+          <div class="github menu-item"
+             href="http://github.com/danherr/"> The Creator's Github </div>
+          <div class="easy menu-item" href="#"> Hard Game </div>
+        </article>
+
+      </section>
+      
     </section>
     
-    <canvas id="asteroids-canvas">
-    </canvas>
-    
-  </section>
-
-  <article class="instructions">
-    <p class="instr-lr instruction"> Left and Right to Turn </p>
-    <p class="instr-ud instruction"> Up to move </p>
-    <p class="instr-shoot instruction"> Space or W to Shoot </p>
-    <p class="instr-pause instruction"> P to Pause </p>
-    <p class="instr-general instruction"> Upgrade to Survive. </p>
-    <p class="instr-Jonathan instruction"> You Can Do It! </p>
-    <a class="instr-Me instruction"
-    href="http://github.com/danherr/"> The Creator's Github </a>
-  </article>
-
-  <script src="not_invented_here/keymaster/keymaster.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
-  <script src="lib/utils.js"></script>
-  <script src="lib/movingObject.js"></script>
-  <script src="lib/asteroid.js"></script>
-  <script src="lib/bullet.js"></script>
-  <script src="lib/ship_params.js"></script>    
-  <script src="lib/ship.js"></script>
-  <script src="lib/game.js"></script>
-  <script src="lib/menu.js"></script>
-  <script src="lib/gameView.js"></script>
-  <script type="text/javascript">
-    var canvasEl = document.getElementById("asteroids-canvas");
-    canvasEl.height = Math.min(window.innerHeight - 240);
-    canvasEl.width = window.innerWidth - 545;
-    ctx = canvasEl.getContext("2d");
-    var game = new window.Asteroids.Game(
+    <script src="not_invented_here/keymaster/keymaster.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script> 
+    <script src="lib/utils.js"></script>
+    <script src="lib/movingObject.js"></script>
+    <script src="lib/asteroid.js"></script>
+    <script src="lib/bullet.js"></script>
+    <script src="lib/ship_params.js"></script>    
+    <script src="lib/ship.js"></script>
+    <script src="lib/game.js"></script>
+    <script src="lib/menu.js"></script>
+    <script src="lib/gameView.js"></script>
+    <script type="text/javascript">
+      var canvasEl = document.getElementById("asteroids-canvas");
+      canvasEl.height = window.innerHeight - 100;
+      canvasEl.width = window.innerWidth - 22;
+      ctx = canvasEl.getContext("2d");
+      var game = new window.Asteroids.Game(
       canvasEl.width,
       canvasEl.height
-    );
-    
-    var menu = new window.Asteroids.WeaponMenu({
-        game: game,
-        JQDomElement: $("#weapons-menu"),
-    });
-    
-    new window.Asteroids.GameView(game, ctx, menu).start();
-  </script>
+      );
+      
+      var menu = new window.Asteroids.WeaponMenu({
+      game: game,
+      JQDomElement: $("#weapons-menu"),
+      });
+      
+      new window.Asteroids.GameView(game, ctx, menu).start();
+    </script>
 
-</body>
+  </body>
 </html>
