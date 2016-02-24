@@ -90,10 +90,18 @@ canvas {
 
 .message.display {
     left: 50%;
-    transition: left 3s;
 }
 
 .message.after-display {
+    left: 150%;
+}
+
+.message.display-move {
+    left: 50%;
+    transition: left 3s;
+}
+
+.message.after-display-move {
     left: 150%;
     transition: left 3s;
 }
