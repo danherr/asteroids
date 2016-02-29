@@ -7,6 +7,7 @@ article, html, body, canvas, section, figure, p {
     background: transparent;
 
     font: inherit;
+    color: inherit;
 }
 
 
@@ -14,6 +15,7 @@ body {
     background: #000;
     overflow: hidden;
     font-family: "arial";
+    color: #dddddd;
 }
 
 .topbar {
@@ -31,12 +33,10 @@ body {
 .topbar .lives {
     float: right;
     padding: 0 20px;
-    color: #fff;
 }
 
 h1 {
     text-align: center;
-    color: #ffffff;
     display: inline;
     margin: auto;
 
@@ -72,7 +72,6 @@ canvas {
     transform: translateY(-50%) translateX(-50%);
     z-index: 10;
     display: block;
-
 }
 
 .message {
@@ -91,7 +90,13 @@ canvas {
     transform: translateY(-50%) translateX(-50%);
     width: 400px;
     background: rgba(0,0,0,0.9);
-    color: #fff;
+}
+
+
+.center-message > * {
+    margin: auto;
+    display: block;
+    text-align: center;
 }
 
 .message.before-display {
@@ -108,19 +113,18 @@ canvas {
 
 .message.display-move {
     left: 50%;
-    transition: left 3s;
+    transition: left 1.5s;
 }
 
 .message.after-display-move {
     left: 150%;
-    transition: left 3s;
+    transition: left 1.5s;
 }
 
 .message > * {
     margin: auto;
     display: block;
     text-align: center;
-    color: #ffffff;
 }
 
 .menu {
@@ -147,14 +151,13 @@ canvas {
 }
 
 .menu-item {
-    color: #ffffff;
     padding: 10px 10px 10px 10px;
     height: 60px;
 }
 
 .menu .selected {
     color: #000000;
-    background: #eeeeee;
+    background: #dddddd;
 }
 
 .fa-right {

@@ -1,8 +1,8 @@
-# [Asteroid Hell] [git-page]
+# [Asteroid Hell] [live]
 
 A copy of Asteroids inspired by bullet-hell games. 
 
-[git-page]: http://danherr.github.io/asteroids/asteroids/
+[live]: http://dan-herr.com/asteroids/
 
 # Gameplay
 
@@ -12,11 +12,11 @@ the more money you make the faster they spawn. In the long run, we are all  dead
 
 #Screen Shots
 
-![Screen Shot 1](/images/screen_shot_1.png)
+[![Screen Shot 1](/images/screen_shot_1.png)] [live]
 
-![Screen Shot 2](/images/screen_shot_2.png)
+[![Screen Shot 2](/images/screen_shot_2.png)] [live]
 
-![Screen Shot 3](/images/screen_shot_3.png)
+[![Screen Shot 3](/images/screen_shot_3.png)] [live]
 
 # Asteroid Generation
 
