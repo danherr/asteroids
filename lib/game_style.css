@@ -1,4 +1,9 @@
 
+@font-face {
+    font-family: "press_start";
+    src: url("../not_invented_here/press_start/prstart.ttf")
+}
+
 article, html, body, canvas, section, figure, p {
     padding: 0;
     margin: 0;
@@ -14,7 +19,7 @@ article, html, body, canvas, section, figure, p {
 body {
     background: #000;
     overflow: hidden;
-    font-family: "arial";
+    font-family: "press_start";
     color: #dddddd;
 }
 
@@ -22,6 +27,7 @@ body {
     position: relative;
     padding: 20px;
     height: 30px;
+    font-size: 14px;
 }
 
 .topbar .money {
@@ -39,7 +45,8 @@ h1 {
     text-align: center;
     display: inline;
     margin: auto;
-
+    font-size: 24px;
+    
     position: absolute;
     top: 50%;
     left: 50%;
@@ -79,8 +86,9 @@ canvas {
     top: 50%;
     left: -50%;
     transform: translateY(-50%) translateX(-50%);
-    width: 400px;
+    width: 450px;
     background: rgba(0,0,0,0.9);
+    font-size: 12px;
 }
 
 .center-message {
@@ -88,7 +96,7 @@ canvas {
     top: 50%;
     left: 50%;
     transform: translateY(-50%) translateX(-50%);
-    width: 400px;
+    width: 450px;
     background: rgba(0,0,0,0.9);
 }
 
@@ -153,6 +161,7 @@ canvas {
 .menu-item {
     padding: 10px 10px 10px 10px;
     height: 60px;
+    font-size: 16px;
 }
 
 .menu .selected {
@@ -170,7 +179,7 @@ canvas {
 
 .selected .description {
     display: block;
-    font-size: 13px;
+    font-size: 11px;
 }
 
 

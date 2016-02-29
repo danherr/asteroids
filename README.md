@@ -38,7 +38,7 @@ a chance to move apart before they start bouncing.
 # Menu
 
 The upgrades menu is activated when the game is paused. They html for it is generated at runtime
-using JQuery from an object defining the various upgrades available. This object keeps track of
+using jQuery from an object defining the various upgrades available. This object keeps track of
 which items the player has bought, and therefore which can be equipped. Equipping items adds
 them to an object on the ship class.
 
