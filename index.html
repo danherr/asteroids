@@ -17,7 +17,7 @@
               lives="5">You Have 5 Lives</figure>
     </section>
 
-    <section class="asteroids-game">
+    <section class="asteroids-game clearfix">
 
       <canvas id="asteroids-canvas">
       </canvas>
@@ -62,6 +62,14 @@
         </article>
 
       </section>
+
+      <section class="footbar clearfix">
+
+        <a class="portfolio" href="http://dan-herr.com">Author's Portfolio</a>
+
+        <a class="github" href="http://github.com/danherr/asteroids">Github</a>
+        
+      </section>
       
     </section>
     
@@ -78,7 +86,7 @@
     <script src="lib/gameView.js"></script>
     <script type="text/javascript">
       var canvasEl = document.getElementById("asteroids-canvas");
-      canvasEl.height = window.innerHeight - 100;
+      canvasEl.height = window.innerHeight - 130;
       canvasEl.width = window.innerWidth - 22;
       ctx = canvasEl.getContext("2d");
       var game = new window.Asteroids.Game(

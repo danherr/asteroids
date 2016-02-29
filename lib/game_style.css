@@ -41,6 +41,23 @@ body {
     padding: 10px 20px;
 }
 
+.footbar {
+    position: absolute;
+    padding: 8px;
+    font-size: 14px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+a.portfolio {
+    float: left;
+}
+
+a.github {
+    float: right;
+}
+
 h1 {
     text-align: center;
     display: inline;
@@ -72,11 +89,11 @@ canvas {
 .asteroids-game-overlay {
     position: absolute;
     overflow: hidden;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 130px);
     width: calc(100vw - 22px);
-    top: 50%;
+    top: 12px;
     left: 50%;
-    transform: translateY(-50%) translateX(-50%);
+    transform: translateX(-50%);
     z-index: 10;
     display: block;
 }
@@ -142,25 +159,24 @@ canvas {
 .left-bar {
     position: absolute;
     top: 0;
+    bottom: 0;
     left: 0;
-    width: 300px;
-    padding: 20px 20px 20px 20px;
-    top: 10px;
-    bottom: 10px;
+    width: 400px;
+    padding: 10px;
 }
 
 .right-bar {
     position: absolute;
     top: 0;
+    bottom: 0;
     right: 0;
-    padding: 20px 20px 20px 20px;
-    width: 250px;
-    height: 100%;
+    padding: 10px 10px 10px 10px;
+    width: 400px;
 }
 
 .menu-item {
     padding: 10px 10px 10px 10px;
-    height: 60px;
+    height: 50px;
     font-size: 16px;
 }
 
